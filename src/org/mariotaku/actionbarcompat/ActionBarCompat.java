@@ -21,20 +21,19 @@ public class ActionBarCompat {
 	}
 
 	public void initCompat() {
-
 	}
 	
 	public void initActionBar() {
 		
 	}
 
-	public void setCustomView(View paramView) {
+	public void setCustomView(View view) {
 	}
 
-	public void setCustomView(View paramView, LayoutParams paramLayoutParams) {
+	public void setCustomView(View view, LayoutParams params) {
 	}
 
-	public void setCustomView(int paramInt) {
+	public void setCustomView(int resId) {
 	}
 
 	public void setIcon(int resId) {
@@ -49,7 +48,7 @@ public class ActionBarCompat {
 	public void setLogo(Drawable logo) {
 	}
 
-	public void setSelectedNavigationItem(int paramInt) {
+	public void setSelectedNavigationItem(int item) {
 	}
 
 	public int getSelectedNavigationIndex() {
@@ -60,37 +59,37 @@ public class ActionBarCompat {
 		return 0;
 	}
 
-	public void setTitle(CharSequence paramCharSequence) {
+	public void setTitle(CharSequence title) {
 	}
 
-	public void setTitle(int paramInt) {
+	public void setTitle(int resId) {
 	}
 
-	public void setSubtitle(CharSequence paramCharSequence) {
+	public void setSubtitle(CharSequence subtitle) {
 	}
 
-	public void setSubtitle(int paramInt) {
+	public void setSubtitle(int resId) {
 	}
 
-	public void setDisplayOptions(int paramInt) {
+	public void setDisplayOptions(int options) {
 	}
 
-	public void setDisplayOptions(int paramInt1, int paramInt2) {
+	public void setDisplayOptions(int options, int mask) {
 	}
 
-	public void setDisplayUseLogoEnabled(boolean paramBoolean) {
+	public void setDisplayUseLogoEnabled(boolean useLogo) {
 	}
 
-	public void setDisplayShowHomeEnabled(boolean paramBoolean) {
+	public void setDisplayShowHomeEnabled(boolean sShowHome) {
 	}
 
-	public void setDisplayHomeAsUpEnabled(boolean paramBoolean) {
+	public void setDisplayHomeAsUpEnabled(boolean showHomeAsUp) {
 	}
 
-	public void setDisplayShowTitleEnabled(boolean paramBoolean) {
+	public void setDisplayShowTitleEnabled(boolean showTitle) {
 	}
 
-	public void setDisplayShowCustomEnabled(boolean paramBoolean) {
+	public void setDisplayShowCustomEnabled(boolean showCustom) {
 	}
 
 	public void setBackgroundDrawable(Drawable paramDrawable) {

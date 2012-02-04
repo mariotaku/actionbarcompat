@@ -1,16 +1,40 @@
 package org.mariotaku.actionbarcompat;
 
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
+
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+
 import android.app.Activity;
+import android.content.Context;
+import android.content.res.XmlResourceParser;
 import android.graphics.drawable.Drawable;
+import android.view.InflateException;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TableRow;
 import android.widget.TextView;
 
-public class ActionBarCompatBase extends ActionBarCompat {
+public class ActionBarCompatBase extends ActionBarCompat{
 
+
+	private static final String MENU_RES_NAMESPACE = "http://schemas.android.com/apk/res/android";
+	private static final String MENU_ATTR_ID = "id";
+	private static final String MENU_ATTR_SHOW_AS_ACTION = "showAsAction";
+	
+	private Set<Integer> mActionItemIds = new HashSet<Integer>();
+	
 	private Activity mActivity;
 	private View mCustomViewContainer;
 	private View mCustomView;
@@ -22,13 +46,13 @@ public class ActionBarCompatBase extends ActionBarCompat {
 	@Override
 	public void initCompat() {
 		mActivity.getWindow().requestFeature(Window.FEATURE_CUSTOM_TITLE);
-		
 	}
 	
 	@Override
 	public void initActionBar() {
 		mActivity.getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.actionbarcompat_common);
-		mCustomViewContainer = (LinearLayout) mActivity.findViewById(R.id.custom_view_container);
+		mCustomViewContainer = (LinearLayout) mActivity.findViewById(R.id.actionbarcompat_custom_view_container);
+		setTitle(mActivity.getTitle());
 	}
 
 	@Override
@@ -50,12 +74,12 @@ public class ActionBarCompatBase extends ActionBarCompat {
 
 	@Override
 	public void setIcon(int resId) {
-		((ImageButton)mActivity.findViewById(R.id.home)).setImageResource(resId);
+		((ImageButton)mActivity.findViewById(R.id.actionbarcompat_home)).setImageResource(resId);
 	}
 
 	@Override
 	public void setIcon(Drawable icon) {
-		((ImageButton)mActivity.findViewById(R.id.home)).setImageDrawable(icon);
+		((ImageButton)mActivity.findViewById(R.id.actionbarcompat_home)).setImageDrawable(icon);
 	}
 
 	@Override
@@ -82,7 +106,7 @@ public class ActionBarCompatBase extends ActionBarCompat {
 
 	@Override
 	public void setTitle(CharSequence title) {
-		TextView mTitleView = (TextView) mActivity.findViewById(R.id.title);
+		TextView mTitleView = (TextView) mActivity.findViewById(R.id.actionbarcompat_title);
 		if (mTitleView != null) {
 			mTitleView.setText(title);
 		}
@@ -95,7 +119,7 @@ public class ActionBarCompatBase extends ActionBarCompat {
 
 	@Override
 	public void setSubtitle(CharSequence subtitle) {
-		TextView mSubtitleView = (TextView) mActivity.findViewById(R.id.subtitle);
+		TextView mSubtitleView = (TextView) mActivity.findViewById(R.id.actionbarcompat_subtitle);
 		if (mSubtitleView == null) return;
 		if (subtitle != null) {
 			mSubtitleView.setVisibility(View.VISIBLE);
@@ -112,29 +136,29 @@ public class ActionBarCompatBase extends ActionBarCompat {
 	}
 
 	@Override
-	public void setDisplayOptions(int paramInt) {
+	public void setDisplayOptions(int options) {
 	}
 
 	@Override
-	public void setDisplayOptions(int paramInt1, int paramInt2) {
+	public void setDisplayOptions(int options, int mask) {
 	}
 
 	@Override
-	public void setDisplayUseLogoEnabled(boolean paramBoolean) {
+	public void setDisplayUseLogoEnabled(boolean useLogo) {
 	}
 
 	@Override
-	public void setDisplayShowHomeEnabled(boolean enabled) {
-		mActivity.findViewById(R.id.home).setVisibility(enabled ? View.VISIBLE : View.GONE);
+	public void setDisplayShowHomeEnabled(boolean showHome) {
+		mActivity.findViewById(R.id.actionbarcompat_home).setVisibility(showHome ? View.VISIBLE : View.GONE);
 	}
 
 	@Override
-	public void setDisplayHomeAsUpEnabled(boolean paramBoolean) {
+	public void setDisplayHomeAsUpEnabled(boolean showHomeAsUp) {
 	}
 
 	@Override
 	public void setDisplayShowTitleEnabled(boolean enabled) {
-		mActivity.findViewById(R.id.title_view).setVisibility(enabled ? View.VISIBLE : View.GONE);
+		mActivity.findViewById(R.id.actionbarcompat_title_view).setVisibility(enabled ? View.VISIBLE : View.GONE);
 	}
 
 	@Override
@@ -191,5 +215,148 @@ public class ActionBarCompatBase extends ActionBarCompat {
 	@Override
 	public boolean isShowing() {
 		return false;
+	}
+
+	/**
+	 * Adds an action button to the compatibility action bar, using menu
+	 * information from a {@link android.view.MenuItem}. If the menu item ID is
+	 * <code>menu_refresh</code>, the menu item's state can be changed to show a
+	 * loading spinner using
+	 * {@link com.android.actionbarcompat.ActionBarHelperBase#setRefreshActionItemState(boolean)}
+	 * .
+	 */
+	private View addActionItemCompatFromMenuItem(final MenuItem item) {
+		final int itemId = item.getItemId();
+		final TableRow actionBar = (TableRow) mActivity.findViewById(R.id.actionbarcompat_menu_buttons);
+		
+		if (actionBar == null) {
+			return null;
+		}
+
+		// Create the button
+		ImageButton actionButton = new ImageButton(mActivity, null,
+				itemId == android.R.id.home ? R.attr.actionbarCompatItemHomeStyle
+						: R.attr.actionbarCompatItemStyle);
+		actionButton.setLayoutParams(new ViewGroup.LayoutParams((int) mActivity.getResources()
+				.getDimension(
+						itemId == android.R.id.home ? R.dimen.actionbarcompat_button_home_width
+								: R.dimen.actionbarcompat_button_width),
+				ViewGroup.LayoutParams.FILL_PARENT));
+		if (itemId == R.id.menu_refresh) {
+			actionButton.setId(R.id.actionbarcompat_menu_refresh);
+		}
+		actionButton.setImageDrawable(item.getIcon());
+		actionButton.setScaleType(ImageView.ScaleType.CENTER);
+		actionButton.setContentDescription(item.getTitle());
+		actionButton.setOnClickListener(new View.OnClickListener() {
+
+			public void onClick(View view) {
+				mActivity.onMenuItemSelected(Window.FEATURE_OPTIONS_PANEL, item);
+			}
+		});
+
+		actionBar.addView(actionButton);
+
+		if (item.getItemId() == R.id.menu_refresh) {
+			// Refresh buttons should be stateful, and allow for indeterminate
+			// progress indicators,
+			// so add those.
+			ProgressBar indicator = new ProgressBar(mActivity, null,
+					R.attr.actionbarCompatProgressIndicatorStyle);
+
+			final int buttonWidth = mActivity.getResources().getDimensionPixelSize(
+					R.dimen.actionbarcompat_button_width);
+			final int buttonHeight = mActivity.getResources().getDimensionPixelSize(
+					R.dimen.actionbarcompat_height);
+			final int progressIndicatorWidth = buttonWidth / 2;
+
+			LinearLayout.LayoutParams indicatorLayoutParams = new LinearLayout.LayoutParams(
+					progressIndicatorWidth, progressIndicatorWidth);
+			indicatorLayoutParams.setMargins((buttonWidth - progressIndicatorWidth) / 2,
+					(buttonHeight - progressIndicatorWidth) / 2,
+					(buttonWidth - progressIndicatorWidth) / 2, 0);
+			indicator.setLayoutParams(indicatorLayoutParams);
+			indicator.setVisibility(View.GONE);
+			indicator.setId(R.id.actionbarcompat_menu_refresh_progress);
+			actionBar.addView(indicator);
+		}
+
+		return actionButton;
+	}
+
+	/**
+	 * A {@link android.view.MenuInflater} that reads action bar metadata.
+	 */
+	private class WrappedMenuInflater extends MenuInflater {
+
+		MenuInflater mInflater;
+
+		public WrappedMenuInflater(Context context, MenuInflater inflater) {
+			super(context);
+			mInflater = inflater;
+		}
+
+		@Override
+		public void inflate(int menuRes, Menu menu) {
+			loadActionBarMetadata(menuRes);
+			mInflater.inflate(menuRes, menu);
+		}
+
+		/**
+		 * Loads action bar metadata from a menu resource, storing a list of
+		 * menu item IDs that should be shown on-screen (i.e. those with
+		 * showAsAction set to always or ifRoom).
+		 * 
+		 * @param menuResId
+		 */
+		private void loadActionBarMetadata(int menuResId) {
+			XmlResourceParser parser = null;
+			try {
+				parser = mActivity.getResources().getXml(menuResId);
+
+				int eventType = parser.getEventType();
+				int itemId;
+				int showAsAction;
+
+				boolean eof = false;
+				while (!eof) {
+					switch (eventType) {
+						case XmlPullParser.START_TAG:
+							if (!parser.getName().equals("item")) {
+								break;
+							}
+
+							itemId = parser.getAttributeResourceValue(MENU_RES_NAMESPACE,
+									MENU_ATTR_ID, 0);
+							if (itemId == 0) {
+								break;
+							}
+
+							showAsAction = parser.getAttributeIntValue(MENU_RES_NAMESPACE,
+									MENU_ATTR_SHOW_AS_ACTION, -1);
+							if (showAsAction == MenuItem.SHOW_AS_ACTION_ALWAYS
+									|| showAsAction == MenuItem.SHOW_AS_ACTION_IF_ROOM) {
+								mActionItemIds.add(itemId);
+							}
+							break;
+
+						case XmlPullParser.END_DOCUMENT:
+							eof = true;
+							break;
+					}
+
+					eventType = parser.next();
+				}
+			} catch (XmlPullParserException e) {
+				throw new InflateException("Error inflating menu XML", e);
+			} catch (IOException e) {
+				throw new InflateException("Error inflating menu XML", e);
+			} finally {
+				if (parser != null) {
+					parser.close();
+				}
+			}
+		}
+
 	}
 }
