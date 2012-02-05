@@ -8,7 +8,7 @@
 	<style name="Theme.ActionBarCompat">
 		<item name="android:windowTitleSize">@dimen/actionbarcompat_height</item>
 		<item name="android:windowTitleBackgroundStyle">@style/ActionBarCompat</item>
-		<item name="android:windowContentOverlay">@drawable/actionbar_shadow</item>
+		<item name="android:windowContentOverlay">@drawable/actionbarcompat_shadow</item>
 
 		<!-- for programmatic instantiation -->
 		<item name="actionbarCompatTitleStyle">@style/ActionBarCompatTitle</item>

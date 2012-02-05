@@ -14,12 +14,17 @@
   limitations under the License.
 -->
 
-<resources>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:gravity="center">
 
-	<style name="Theme" parent="android:style/Theme.Holo"/>
+	<ProgressBar
+		style="?android:attr/indeterminateProgressStyle"
+		android:layout_width="32dp"
+		android:layout_height="32dp"
+		android:layout_gravity="center"
+		android:layout_marginLeft="12dp"
+		android:layout_marginRight="12dp"/>
 
-	<style name="Theme.ActionBarCompat">
-		<item name="android:windowContentOverlay">@drawable/actionbarcompat_shadow</item>
-	</style>
-
-</resources>
+</FrameLayout>

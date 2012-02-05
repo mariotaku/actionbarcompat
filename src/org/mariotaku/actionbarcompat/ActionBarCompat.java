@@ -3,6 +3,8 @@ package org.mariotaku.actionbarcompat;
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 
@@ -20,11 +22,12 @@ public class ActionBarCompat {
 		}
 	}
 
-	public void initCompat() {
+	public boolean initCompat() {
+		return true;
 	}
 	
-	public void initActionBar() {
-		
+	public boolean initActionBar() {
+		return true;
 	}
 
 	public void setCustomView(View view) {
@@ -131,5 +134,27 @@ public class ActionBarCompat {
 	public boolean isShowing() {
 		return false;
 	}
+	
+	/**
+	 * Returns a {@link MenuInflater} for use when inflating menus. The
+	 * implementation of this method in {@link ActionBarHelperBase} returns a
+	 * wrapped menu inflater that can read action bar metadata from a menu
+	 * resource pre-Honeycomb.
+	 */
+	public MenuInflater getMenuInflater(MenuInflater superMenuInflater) {
+		return superMenuInflater;
+	}
 
+	/**
+	 * Sets the indeterminate loading state of the item with ID
+	 * {@link R.id.menu_refresh}. (where the item ID was menu_refresh).
+	 */
+	public void setRefreshActionItemState(boolean refreshing) {
+		
+	}
+
+	public boolean hideMenuInActionBar(Menu menu) {
+		return false;
+	}
+	
 }

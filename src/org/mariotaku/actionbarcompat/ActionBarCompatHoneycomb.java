@@ -2,26 +2,25 @@ package org.mariotaku.actionbarcompat;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 
 public class ActionBarCompatHoneycomb extends ActionBarCompat {
 
 	private Activity mActivity;
+
+	private Menu mOptionsMenu;
+	private View mRefreshIndeterminateProgressView = null;
 	
 	public ActionBarCompatHoneycomb(Activity activity) {
 		mActivity = activity;
 	}
 	
-	@Override
-	public void initCompat() {
-	}
-	
-	@Override
-	public void initActionBar() {
-	}
-
 	@Override
 	public void setCustomView(View view) {
 		mActivity.getActionBar().setCustomView(view);
@@ -167,14 +166,51 @@ public class ActionBarCompatHoneycomb extends ActionBarCompat {
 
 	@Override
 	public void show() {
+		mActivity.getActionBar().show();
 	}
 
 	@Override
 	public void hide() {
+		mActivity.getActionBar().hide();
 	}
 
 	@Override
 	public boolean isShowing() {
 		return mActivity.getActionBar().isShowing();
+	}
+	
+	@Override
+	public void setRefreshActionItemState(boolean refreshing) {
+		// On Honeycomb, we can set the state of the refresh button by giving it
+		// a custom
+		// action view.
+		if (mOptionsMenu == null) {
+			return;
+		}
+
+		final MenuItem refreshItem = mOptionsMenu.findItem(R.id.menu_refresh);
+		if (refreshItem != null) {
+			if (refreshing) {
+				if (mRefreshIndeterminateProgressView == null) {
+					LayoutInflater inflater = (LayoutInflater) getActionBarThemedContext()
+							.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+					mRefreshIndeterminateProgressView = inflater.inflate(
+							R.layout.actionbarcompat_indeterminate_progress, null);
+				}
+
+				refreshItem.setActionView(mRefreshIndeterminateProgressView);
+			} else {
+				refreshItem.setActionView(null);
+			}
+		}
+	}
+	
+	/**
+	 * Returns a {@link Context} suitable for inflating layouts for the action
+	 * bar. The implementation for this method in {@link ActionBarHelperICS}
+	 * asks the action bar for a themed context.
+	 */
+	protected Context getActionBarThemedContext() {
+		return mActivity;
 	}
 }

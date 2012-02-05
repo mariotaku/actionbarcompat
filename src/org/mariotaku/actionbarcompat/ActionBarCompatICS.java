@@ -9,21 +9,11 @@ import android.view.ViewGroup.LayoutParams;
 public class ActionBarCompatICS extends ActionBarCompat {
 
 	private Activity mActivity;
-	private View mCustomView;
 	
 	public ActionBarCompatICS(Activity activity) {
 		mActivity = activity;
 	}
 	
-	@Override
-	public void initCompat() {
-		
-	}
-	
-	@Override
-	public void initActionBar() {
-	}
-
 	@Override
 	public void setCustomView(View view) {
 		mActivity.getActionBar().setCustomView(view);
@@ -33,7 +23,6 @@ public class ActionBarCompatICS extends ActionBarCompat {
 	public void setCustomView(View view, LayoutParams params) {
 		ActionBar.LayoutParams p = new ActionBar.LayoutParams(params.width, params.height);
 		mActivity.getActionBar().setCustomView(view, p);
-		mCustomView = view;
 	}
 
 	@Override
@@ -170,10 +159,12 @@ public class ActionBarCompatICS extends ActionBarCompat {
 
 	@Override
 	public void show() {
+		mActivity.getActionBar().show();
 	}
 
 	@Override
 	public void hide() {
+		mActivity.getActionBar().hide();
 	}
 
 	@Override

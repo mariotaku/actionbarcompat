@@ -20,13 +20,12 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageButton;
-import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.TableRow;
 import android.widget.TextView;
 
-public class ActionBarCompatBase extends ActionBarCompat{
+public class ActionBarCompatBase extends ActionBarCompat {
 
 
 	private static final String MENU_RES_NAMESPACE = "http://schemas.android.com/apk/res/android";
@@ -44,17 +43,61 @@ public class ActionBarCompatBase extends ActionBarCompat{
 	}
 
 	@Override
-	public void initCompat() {
-		mActivity.getWindow().requestFeature(Window.FEATURE_CUSTOM_TITLE);
+	public boolean initCompat() {
+		mActivity.requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
+		return true;
 	}
 	
 	@Override
-	public void initActionBar() {
+	public boolean initActionBar() {
 		mActivity.getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.actionbarcompat_common);
+		
 		mCustomViewContainer = (LinearLayout) mActivity.findViewById(R.id.actionbarcompat_custom_view_container);
 		setTitle(mActivity.getTitle());
+		
+		// Add Home button
+		setHomeButton();
+
+		MenuCompat menu = new MenuCompat(mActivity);
+		mActivity.onCreatePanelMenu(Window.FEATURE_OPTIONS_PANEL, menu);
+		mActivity.onPrepareOptionsMenu(menu);
+		for (int i = 0; i < menu.size(); i++) {
+			MenuItem item = menu.getItem(i);
+			if (mActionItemIds.contains(item.getItemId())) {
+				addActionItemCompatFromMenuItem(item);
+			}
+		}
+		return true;
 	}
 
+	@Override
+	public void setRefreshActionItemState(boolean refreshing) {
+		View refreshButton = mActivity.findViewById(R.id.actionbarcompat_menu_refresh);
+		View refreshIndicator = mActivity.findViewById(R.id.actionbarcompat_menu_refresh_progress);
+
+		if (refreshButton != null) {
+			refreshButton.setVisibility(refreshing ? View.GONE : View.VISIBLE);
+		}
+		if (refreshIndicator != null) {
+			refreshIndicator.setVisibility(refreshing ? View.VISIBLE : View.GONE);
+		}
+	}
+	
+	/**
+	 * Action bar helper code to be run in
+	 * {@link Activity#onCreateOptionsMenu(android.view.Menu)}.
+	 * 
+	 * NOTE: This code will mark on-screen menu items as invisible.
+	 */
+	@Override
+	public boolean hideMenuInActionBar(Menu menu) {
+		// Hides on-screen action items from the options menu.
+		for (int id : mActionItemIds) {
+			menu.findItem(id).setVisible(false);
+		}
+		return true;
+	}
+	
 	@Override
 	public void setCustomView(View view) {
 		setCustomView(view, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
@@ -206,17 +249,33 @@ public class ActionBarCompatBase extends ActionBarCompat{
 
 	@Override
 	public void show() {
+		mActivity.findViewById(R.id.actionbarcompat).setVisibility(View.VISIBLE);
 	}
 
 	@Override
 	public void hide() {
+		mActivity.findViewById(R.id.actionbarcompat).setVisibility(View.GONE);
 	}
 
 	@Override
 	public boolean isShowing() {
-		return false;
+		return (mActivity.findViewById(R.id.actionbarcompat).getVisibility() == View.VISIBLE);
 	}
 
+	private void setHomeButton() {
+		// Add Home button
+		MenuCompat tempMenu = new MenuCompat(mActivity);
+		final MenuItemCompat homeItem = new MenuItemCompat(tempMenu, android.R.id.home, 0,
+				"Home");
+		ImageButton homeButton = (ImageButton) mActivity.findViewById(R.id.actionbarcompat_home);
+		homeButton.setOnClickListener(new View.OnClickListener() {
+
+			public void onClick(View view) {
+				mActivity.onMenuItemSelected(Window.FEATURE_OPTIONS_PANEL, homeItem);
+			}
+		});
+	}
+	
 	/**
 	 * Adds an action button to the compatibility action bar, using menu
 	 * information from a {@link android.view.MenuItem}. If the menu item ID is
@@ -227,26 +286,24 @@ public class ActionBarCompatBase extends ActionBarCompat{
 	 */
 	private View addActionItemCompatFromMenuItem(final MenuItem item) {
 		final int itemId = item.getItemId();
-		final TableRow actionBar = (TableRow) mActivity.findViewById(R.id.actionbarcompat_menu_buttons);
+		final LinearLayout actionMenu = (LinearLayout) mActivity.findViewById(R.id.actionbarcompat_menu_buttons);
 		
-		if (actionBar == null) {
+		if (actionMenu == null) {
 			return null;
 		}
 
 		// Create the button
 		ImageButton actionButton = new ImageButton(mActivity, null,
-				itemId == android.R.id.home ? R.attr.actionbarCompatItemHomeStyle
-						: R.attr.actionbarCompatItemStyle);
+				R.attr.actionbarCompatItemStyle);
 		actionButton.setLayoutParams(new ViewGroup.LayoutParams((int) mActivity.getResources()
 				.getDimension(
-						itemId == android.R.id.home ? R.dimen.actionbarcompat_button_home_width
-								: R.dimen.actionbarcompat_button_width),
+						R.dimen.actionbarcompat_button_width),
 				ViewGroup.LayoutParams.FILL_PARENT));
 		if (itemId == R.id.menu_refresh) {
 			actionButton.setId(R.id.actionbarcompat_menu_refresh);
 		}
 		actionButton.setImageDrawable(item.getIcon());
-		actionButton.setScaleType(ImageView.ScaleType.CENTER);
+		actionButton.setScaleType(ScaleType.CENTER);
 		actionButton.setContentDescription(item.getTitle());
 		actionButton.setOnClickListener(new View.OnClickListener() {
 
@@ -255,7 +312,7 @@ public class ActionBarCompatBase extends ActionBarCompat{
 			}
 		});
 
-		actionBar.addView(actionButton);
+		actionMenu.addView(actionButton);
 
 		if (item.getItemId() == R.id.menu_refresh) {
 			// Refresh buttons should be stateful, and allow for indeterminate
@@ -278,7 +335,7 @@ public class ActionBarCompatBase extends ActionBarCompat{
 			indicator.setLayoutParams(indicatorLayoutParams);
 			indicator.setVisibility(View.GONE);
 			indicator.setId(R.id.actionbarcompat_menu_refresh_progress);
-			actionBar.addView(indicator);
+			actionMenu.addView(indicator);
 		}
 
 		return actionButton;
@@ -287,11 +344,11 @@ public class ActionBarCompatBase extends ActionBarCompat{
 	/**
 	 * A {@link android.view.MenuInflater} that reads action bar metadata.
 	 */
-	private class WrappedMenuInflater extends MenuInflater {
+	private class MenuInflaterCompat extends MenuInflater {
 
 		MenuInflater mInflater;
 
-		public WrappedMenuInflater(Context context, MenuInflater inflater) {
+		public MenuInflaterCompat(Context context, MenuInflater inflater) {
 			super(context);
 			mInflater = inflater;
 		}
@@ -357,6 +414,13 @@ public class ActionBarCompatBase extends ActionBarCompat{
 				}
 			}
 		}
-
+	}
+	
+	/**
+	 * Returns a {@link android.view.MenuInflater} that can read action bar
+	 * metadata on pre-Honeycomb devices.
+	 */
+	public MenuInflater getMenuInflater(MenuInflater superMenuInflater) {
+		return new MenuInflaterCompat(mActivity, superMenuInflater);
 	}
 }

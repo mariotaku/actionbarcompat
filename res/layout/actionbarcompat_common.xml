@@ -15,6 +15,7 @@
  limitations under the License.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@id/actionbarcompat"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
 	android:gravity="center_vertical"
@@ -27,7 +28,7 @@
 		android:layout_weight="0"
 		android:background="@drawable/actionbarcompat_menu_button"
 		android:gravity="center_vertical|left"
-		android:src="@drawable/ic_menu_home"/>
+		android:src="@drawable/ic_menu_home_actionbarcompat"/>
 
 	<LinearLayout
 		android:id="@id/actionbarcompat_title_view"
@@ -66,7 +67,7 @@
 		android:orientation="horizontal"
 		android:visibility="gone"/>
 
-	<TableRow
+	<LinearLayout
 		android:id="@id/actionbarcompat_menu_buttons"
 		android:layout_width="wrap_content"
 		android:layout_height="fill_parent"

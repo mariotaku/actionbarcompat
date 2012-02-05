@@ -1,13 +1,17 @@
 package org.mariotaku.actionbarcompat;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 
 public class ActionBarActivity extends FragmentActivity {
 
-	ActionBarCompat mActionBarCompat = ActionBarCompat.getInstance(this);
+	private ActionBarCompat mActionBarCompat = ActionBarCompat.getInstance(this);
+	private boolean mActionBarInitialized = false;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -16,22 +20,56 @@ public class ActionBarActivity extends FragmentActivity {
 	}
 	
 	@Override
-	public void setContentView(View view) {
-		super.setContentView(view);
+	public void onPostCreate(Bundle savedInstanceState) {
+		if (!mActionBarInitialized){
+			mActionBarInitialized = mActionBarCompat.initActionBar();
+		}
+		super.onPostCreate(savedInstanceState);
 	}
 	
 	@Override
-	public void setContentView(int layoutResID) {
+	public MenuInflater getMenuInflater() {
+		return mActionBarCompat.getMenuInflater(super.getMenuInflater());
+	}
+	
+	/**
+	 * Base action bar-aware implementation for
+	 * {@link Activity#onCreateOptionsMenu(android.view.Menu)}.
+	 * 
+	 * Note: marking menu items as invisible/visible is not currently supported.
+	 */
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		boolean retValue = false;
+		retValue |= mActionBarCompat.hideMenuInActionBar(menu);
+		retValue |= super.onCreateOptionsMenu(menu);
+		return retValue;
+	}
+
+	@Override
+	public void setContentView(int layoutResID){
 		super.setContentView(layoutResID);
-		mActionBarCompat.initActionBar();
+		if (!mActionBarInitialized){
+			mActionBarInitialized = mActionBarCompat.initActionBar();
+		}
+	}
+	
+	@Override
+	public void setContentView(View view) {
+		super.setContentView(view);
+		if (!mActionBarInitialized){
+			mActionBarInitialized = mActionBarCompat.initActionBar();
+		}
 	}
 	
 	@Override
 	public void setContentView(View view, LayoutParams params) {
 		super.setContentView(view, params);
-		mActionBarCompat.initActionBar();
+		if (!mActionBarInitialized){
+			mActionBarInitialized = mActionBarCompat.initActionBar();
+		}
 	}
-
+	
 	@Override
 	public void onTitleChanged(CharSequence title, int color) {
 		mActionBarCompat.setTitle(title);
