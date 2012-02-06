@@ -83,6 +83,14 @@ public class ActionBarCompatBase extends ActionBarCompat {
 		}
 	}
 	
+	@Override
+	public void setStarActionItemState(boolean starred) {
+		ImageButton starButton = (ImageButton) mActivity.findViewById(R.id.actionbarcompat_menu_star);
+		if (starButton != null) {
+			starButton.setImageResource(starred ? R.drawable.ic_menu_actionbarcompat_star : R.drawable.ic_menu_actionbarcompat_star_off);
+		}
+	}
+	
 	/**
 	 * Action bar helper code to be run in
 	 * {@link Activity#onCreateOptionsMenu(android.view.Menu)}.
@@ -299,12 +307,18 @@ public class ActionBarCompatBase extends ActionBarCompat {
 				.getDimension(
 						R.dimen.actionbarcompat_button_width),
 				ViewGroup.LayoutParams.FILL_PARENT));
-		if (itemId == R.id.menu_refresh) {
-			actionButton.setId(R.id.actionbarcompat_menu_refresh);
-		}
+		
 		actionButton.setImageDrawable(item.getIcon());
 		actionButton.setScaleType(ScaleType.CENTER);
 		actionButton.setContentDescription(item.getTitle());
+		
+		if (itemId == R.id.menu_refresh) {
+			actionButton.setId(R.id.actionbarcompat_menu_refresh);
+		} else if (itemId == R.id.menu_star) {
+			actionButton.setId(R.id.actionbarcompat_menu_star);
+			actionButton.setImageResource(R.drawable.ic_menu_actionbarcompat_star_off);
+		}
+		
 		actionButton.setOnClickListener(new View.OnClickListener() {
 
 			public void onClick(View view) {

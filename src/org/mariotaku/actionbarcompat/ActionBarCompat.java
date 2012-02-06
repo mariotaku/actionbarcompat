@@ -152,6 +152,10 @@ public class ActionBarCompat {
 	public void setRefreshActionItemState(boolean refreshing) {
 		
 	}
+	
+	public void setStarActionItemState(boolean starred) {
+		
+	}
 
 	public boolean hideMenuInActionBar(Menu menu) {
 		return false;
