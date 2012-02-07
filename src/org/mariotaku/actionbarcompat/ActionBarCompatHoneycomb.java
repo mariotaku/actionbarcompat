@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -16,11 +17,16 @@ public class ActionBarCompatHoneycomb extends ActionBarCompat {
 
 	private Menu mOptionsMenu;
 	private View mRefreshIndeterminateProgressView = null;
-	
+
 	public ActionBarCompatHoneycomb(Activity activity) {
 		mActivity = activity;
 	}
-	
+
+	@Override
+	public boolean initCompat() {
+		return true;
+	}
+
 	@Override
 	public void setCustomView(View view) {
 		mActivity.getActionBar().setCustomView(view);
@@ -178,7 +184,7 @@ public class ActionBarCompatHoneycomb extends ActionBarCompat {
 	public boolean isShowing() {
 		return mActivity.getActionBar().isShowing();
 	}
-	
+
 	@Override
 	public void setRefreshActionItemState(boolean refreshing) {
 		// On Honeycomb, we can set the state of the refresh button by giving it
@@ -204,7 +210,7 @@ public class ActionBarCompatHoneycomb extends ActionBarCompat {
 			}
 		}
 	}
-	
+
 	/**
 	 * Returns a {@link Context} suitable for inflating layouts for the action
 	 * bar. The implementation for this method in {@link ActionBarHelperICS}
@@ -213,4 +219,25 @@ public class ActionBarCompatHoneycomb extends ActionBarCompat {
 	protected Context getActionBarThemedContext() {
 		return mActivity;
 	}
+
+	@Override
+	public boolean initActionBar() {
+		return false;
+	}
+
+	@Override
+	public MenuInflater getMenuInflater(MenuInflater inflater) {
+		return inflater;
+	}
+
+	@Override
+	public void setStarActionItemState(boolean starred) {
+		
+	}
+
+	@Override
+	public boolean hideMenuInActionBar(Menu menu) {
+		return false;
+	}
+
 }

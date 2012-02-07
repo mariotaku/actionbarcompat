@@ -3,17 +3,24 @@ package org.mariotaku.actionbarcompat;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 
 public class ActionBarCompatICS extends ActionBarCompat {
 
 	private Activity mActivity;
-	
+
 	public ActionBarCompatICS(Activity activity) {
 		mActivity = activity;
 	}
-	
+
+	@Override
+	public boolean initCompat() {
+		return true;
+	}
+
 	@Override
 	public void setCustomView(View view) {
 		mActivity.getActionBar().setCustomView(view);
@@ -170,5 +177,30 @@ public class ActionBarCompatICS extends ActionBarCompat {
 	@Override
 	public boolean isShowing() {
 		return mActivity.getActionBar().isShowing();
+	}
+
+	@Override
+	public boolean initActionBar() {
+		return true;
+	}
+
+	@Override
+	public MenuInflater getMenuInflater(MenuInflater inflater) {
+		return inflater;
+	}
+
+	@Override
+	public void setRefreshActionItemState(boolean refreshing) {
+		
+	}
+
+	@Override
+	public void setStarActionItemState(boolean starred) {
+		
+	}
+
+	@Override
+	public boolean hideMenuInActionBar(Menu menu) {
+		return false;
 	}
 }

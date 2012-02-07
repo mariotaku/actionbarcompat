@@ -27,13 +27,12 @@ import android.widget.TextView;
 
 public class ActionBarCompatBase extends ActionBarCompat {
 
-
 	private static final String MENU_RES_NAMESPACE = "http://schemas.android.com/apk/res/android";
 	private static final String MENU_ATTR_ID = "id";
 	private static final String MENU_ATTR_SHOW_AS_ACTION = "showAsAction";
-	
+
 	private Set<Integer> mActionItemIds = new HashSet<Integer>();
-	
+
 	private Activity mActivity;
 	private View mCustomViewContainer;
 	private View mCustomView;
@@ -47,14 +46,16 @@ public class ActionBarCompatBase extends ActionBarCompat {
 		mActivity.requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		return true;
 	}
-	
+
 	@Override
 	public boolean initActionBar() {
-		mActivity.getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.actionbarcompat_common);
-		
-		mCustomViewContainer = (LinearLayout) mActivity.findViewById(R.id.actionbarcompat_custom_view_container);
+		mActivity.getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,
+				R.layout.actionbarcompat_common);
+
+		mCustomViewContainer = (LinearLayout) mActivity
+				.findViewById(R.id.actionbarcompat_custom_view_container);
 		setTitle(mActivity.getTitle());
-		
+
 		// Add Home button
 		setHomeButton();
 
@@ -82,15 +83,17 @@ public class ActionBarCompatBase extends ActionBarCompat {
 			refreshIndicator.setVisibility(refreshing ? View.VISIBLE : View.GONE);
 		}
 	}
-	
+
 	@Override
 	public void setStarActionItemState(boolean starred) {
-		ImageButton starButton = (ImageButton) mActivity.findViewById(R.id.actionbarcompat_menu_star);
+		ImageButton starButton = (ImageButton) mActivity
+				.findViewById(R.id.actionbarcompat_menu_star);
 		if (starButton != null) {
-			starButton.setImageResource(starred ? R.drawable.ic_menu_actionbarcompat_star : R.drawable.ic_menu_actionbarcompat_star_off);
+			starButton.setImageResource(starred ? R.drawable.ic_menu_actionbarcompat_star
+					: R.drawable.ic_menu_actionbarcompat_star_off);
 		}
 	}
-	
+
 	/**
 	 * Action bar helper code to be run in
 	 * {@link Activity#onCreateOptionsMenu(android.view.Menu)}.
@@ -105,7 +108,7 @@ public class ActionBarCompatBase extends ActionBarCompat {
 		}
 		return true;
 	}
-	
+
 	@Override
 	public void setCustomView(View view) {
 		setCustomView(view, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
@@ -125,12 +128,12 @@ public class ActionBarCompatBase extends ActionBarCompat {
 
 	@Override
 	public void setIcon(int resId) {
-		((ImageButton)mActivity.findViewById(R.id.actionbarcompat_home)).setImageResource(resId);
+		((ImageButton) mActivity.findViewById(R.id.actionbarcompat_home)).setImageResource(resId);
 	}
 
 	@Override
 	public void setIcon(Drawable icon) {
-		((ImageButton)mActivity.findViewById(R.id.actionbarcompat_home)).setImageDrawable(icon);
+		((ImageButton) mActivity.findViewById(R.id.actionbarcompat_home)).setImageDrawable(icon);
 	}
 
 	@Override
@@ -200,7 +203,8 @@ public class ActionBarCompatBase extends ActionBarCompat {
 
 	@Override
 	public void setDisplayShowHomeEnabled(boolean showHome) {
-		mActivity.findViewById(R.id.actionbarcompat_home).setVisibility(showHome ? View.VISIBLE : View.GONE);
+		mActivity.findViewById(R.id.actionbarcompat_home).setVisibility(
+				showHome ? View.VISIBLE : View.GONE);
 	}
 
 	@Override
@@ -209,7 +213,8 @@ public class ActionBarCompatBase extends ActionBarCompat {
 
 	@Override
 	public void setDisplayShowTitleEnabled(boolean enabled) {
-		mActivity.findViewById(R.id.actionbarcompat_title_view).setVisibility(enabled ? View.VISIBLE : View.GONE);
+		mActivity.findViewById(R.id.actionbarcompat_title_view).setVisibility(
+				enabled ? View.VISIBLE : View.GONE);
 	}
 
 	@Override
@@ -273,8 +278,7 @@ public class ActionBarCompatBase extends ActionBarCompat {
 	private void setHomeButton() {
 		// Add Home button
 		MenuCompat tempMenu = new MenuCompat(mActivity);
-		final MenuItemCompat homeItem = new MenuItemCompat(tempMenu, android.R.id.home, 0,
-				"Home");
+		final MenuItemCompat homeItem = new MenuItemCompat(tempMenu, android.R.id.home, 0, "Home");
 		ImageButton homeButton = (ImageButton) mActivity.findViewById(R.id.actionbarcompat_home);
 		homeButton.setOnClickListener(new View.OnClickListener() {
 
@@ -283,7 +287,7 @@ public class ActionBarCompatBase extends ActionBarCompat {
 			}
 		});
 	}
-	
+
 	/**
 	 * Adds an action button to the compatibility action bar, using menu
 	 * information from a {@link android.view.MenuItem}. If the menu item ID is
@@ -294,31 +298,30 @@ public class ActionBarCompatBase extends ActionBarCompat {
 	 */
 	private View addActionItemCompatFromMenuItem(final MenuItem item) {
 		final int itemId = item.getItemId();
-		final LinearLayout actionMenu = (LinearLayout) mActivity.findViewById(R.id.actionbarcompat_menu_buttons);
-		
+		final LinearLayout actionMenu = (LinearLayout) mActivity
+				.findViewById(R.id.actionbarcompat_menu_buttons);
+
 		if (actionMenu == null) {
 			return null;
 		}
 
 		// Create the button
-		ImageButton actionButton = new ImageButton(mActivity, null,
-				R.attr.actionbarCompatItemStyle);
+		ImageButton actionButton = new ImageButton(mActivity, null, R.attr.actionbarCompatItemStyle);
 		actionButton.setLayoutParams(new ViewGroup.LayoutParams((int) mActivity.getResources()
-				.getDimension(
-						R.dimen.actionbarcompat_button_width),
+				.getDimension(R.dimen.actionbarcompat_button_width),
 				ViewGroup.LayoutParams.FILL_PARENT));
-		
+
 		actionButton.setImageDrawable(item.getIcon());
 		actionButton.setScaleType(ScaleType.CENTER);
 		actionButton.setContentDescription(item.getTitle());
-		
+
 		if (itemId == R.id.menu_refresh) {
 			actionButton.setId(R.id.actionbarcompat_menu_refresh);
 		} else if (itemId == R.id.menu_star) {
 			actionButton.setId(R.id.actionbarcompat_menu_star);
 			actionButton.setImageResource(R.drawable.ic_menu_actionbarcompat_star_off);
 		}
-		
+
 		actionButton.setOnClickListener(new View.OnClickListener() {
 
 			public void onClick(View view) {
@@ -429,7 +432,7 @@ public class ActionBarCompatBase extends ActionBarCompat {
 			}
 		}
 	}
-	
+
 	/**
 	 * Returns a {@link android.view.MenuInflater} that can read action bar
 	 * metadata on pre-Honeycomb devices.

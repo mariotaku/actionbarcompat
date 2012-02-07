@@ -8,7 +8,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 
-public class ActionBarCompat {
+public abstract class ActionBarCompat {
 
 	public static ActionBarCompat getInstance(Activity activity) {
 		if (activity == null) return null;
@@ -22,37 +22,25 @@ public class ActionBarCompat {
 		}
 	}
 
-	public boolean initCompat() {
-		return true;
-	}
-	
-	public boolean initActionBar() {
-		return true;
-	}
+	public abstract boolean initCompat();
 
-	public void setCustomView(View view) {
-	}
+	public abstract boolean initActionBar();
 
-	public void setCustomView(View view, LayoutParams params) {
-	}
+	public abstract void setCustomView(View view);
 
-	public void setCustomView(int resId) {
-	}
+	public abstract void setCustomView(View view, LayoutParams params);
 
-	public void setIcon(int resId) {
-	}
+	public abstract void setCustomView(int resId);
 
-	public void setIcon(Drawable icon) {
-	}
+	public abstract void setIcon(int resId);
 
-	public void setLogo(int resId) {
-	}
+	public abstract void setIcon(Drawable icon);
 
-	public void setLogo(Drawable logo) {
-	}
+	public abstract void setLogo(int resId);
 
-	public void setSelectedNavigationItem(int item) {
-	}
+	public abstract void setLogo(Drawable logo);
+
+	public abstract void setSelectedNavigationItem(int item);
 
 	public int getSelectedNavigationIndex() {
 		return 0;
@@ -62,103 +50,66 @@ public class ActionBarCompat {
 		return 0;
 	}
 
-	public void setTitle(CharSequence title) {
-	}
+	public abstract void setTitle(CharSequence title);
 
-	public void setTitle(int resId) {
-	}
+	public abstract void setTitle(int resId);
 
-	public void setSubtitle(CharSequence subtitle) {
-	}
+	public abstract void setSubtitle(CharSequence subtitle);
 
-	public void setSubtitle(int resId) {
-	}
+	public abstract void setSubtitle(int resId);
 
-	public void setDisplayOptions(int options) {
-	}
+	public abstract void setDisplayOptions(int options);
 
-	public void setDisplayOptions(int options, int mask) {
-	}
+	public abstract void setDisplayOptions(int options, int mask);
 
-	public void setDisplayUseLogoEnabled(boolean useLogo) {
-	}
+	public abstract void setDisplayUseLogoEnabled(boolean useLogo);
 
-	public void setDisplayShowHomeEnabled(boolean sShowHome) {
-	}
+	public abstract void setDisplayShowHomeEnabled(boolean sShowHome);
 
-	public void setDisplayHomeAsUpEnabled(boolean showHomeAsUp) {
-	}
+	public abstract void setDisplayHomeAsUpEnabled(boolean showHomeAsUp);
 
-	public void setDisplayShowTitleEnabled(boolean showTitle) {
-	}
+	public abstract void setDisplayShowTitleEnabled(boolean showTitle);
 
-	public void setDisplayShowCustomEnabled(boolean showCustom) {
-	}
+	public abstract void setDisplayShowCustomEnabled(boolean showCustom);
 
-	public void setBackgroundDrawable(Drawable paramDrawable) {
-	}
+	public abstract void setBackgroundDrawable(Drawable paramDrawable);
 
-	public View getCustomView() {
-		return null;
-	}
+	public abstract View getCustomView();
 
-	public CharSequence getTitle() {
-		return null;
-	}
+	public abstract CharSequence getTitle();
 
-	public CharSequence getSubtitle() {
-		return null;
-	}
+	public abstract CharSequence getSubtitle();
 
-	public int getNavigationMode() {
-		return 0;
-	}
+	public abstract int getNavigationMode();
 
-	public void setNavigationMode(int paramInt) {
-	}
+	public abstract void setNavigationMode(int paramInt);
 
-	public int getDisplayOptions() {
-		return 0;
-	}
+	public abstract int getDisplayOptions();
 
-	public int getHeight() {
-		return 0;
-	}
+	public abstract int getHeight();
 
-	public void show() {
-	}
+	public abstract void show();
 
-	public void hide() {
-	}
+	public abstract void hide();
 
-	public boolean isShowing() {
-		return false;
-	}
-	
+	public abstract boolean isShowing();
+
 	/**
 	 * Returns a {@link MenuInflater} for use when inflating menus. The
 	 * implementation of this method in {@link ActionBarHelperBase} returns a
 	 * wrapped menu inflater that can read action bar metadata from a menu
 	 * resource pre-Honeycomb.
 	 */
-	public MenuInflater getMenuInflater(MenuInflater superMenuInflater) {
-		return superMenuInflater;
-	}
+	public abstract MenuInflater getMenuInflater(MenuInflater inflater);
 
 	/**
 	 * Sets the indeterminate loading state of the item with ID
 	 * {@link R.id.menu_refresh}. (where the item ID was menu_refresh).
 	 */
-	public void setRefreshActionItemState(boolean refreshing) {
-		
-	}
-	
-	public void setStarActionItemState(boolean starred) {
-		
-	}
+	public abstract void setRefreshActionItemState(boolean refreshing);
 
-	public boolean hideMenuInActionBar(Menu menu) {
-		return false;
-	}
-	
+	public abstract void setStarActionItemState(boolean starred);
+
+	public abstract boolean hideMenuInActionBar(Menu menu);
+
 }
