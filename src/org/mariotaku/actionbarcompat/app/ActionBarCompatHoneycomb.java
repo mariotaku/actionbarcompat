@@ -1,5 +1,6 @@
-package org.mariotaku.actionbarcompat;
+package org.mariotaku.actionbarcompat.app;
 
+import org.mariotaku.actionbarcompat.R;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;

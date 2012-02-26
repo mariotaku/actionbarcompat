@@ -1,9 +1,12 @@
-package org.mariotaku.actionbarcompat;
+package org.mariotaku.actionbarcompat.app;
 
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.mariotaku.actionbarcompat.R;
+import org.mariotaku.actionbarcompat.menu.MenuCompat;
+import org.mariotaku.actionbarcompat.menu.MenuItemCompat;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 

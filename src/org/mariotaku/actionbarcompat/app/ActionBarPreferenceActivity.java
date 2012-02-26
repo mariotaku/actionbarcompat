@@ -1,4 +1,4 @@
-package org.mariotaku.actionbarcompat;
+package org.mariotaku.actionbarcompat.app;
 
 import android.os.Bundle;
 import android.preference.PreferenceActivity;

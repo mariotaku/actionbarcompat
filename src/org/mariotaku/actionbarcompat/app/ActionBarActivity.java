@@ -1,4 +1,4 @@
-package org.mariotaku.actionbarcompat;
+package org.mariotaku.actionbarcompat.app;
 
 import android.app.Activity;
 import android.os.Bundle;

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.mariotaku.actionbarcompat;
+package org.mariotaku.actionbarcompat.menu;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;

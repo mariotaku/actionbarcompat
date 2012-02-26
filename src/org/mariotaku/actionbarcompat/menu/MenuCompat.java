@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.mariotaku.actionbarcompat;
+package org.mariotaku.actionbarcompat.menu;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -58,6 +58,7 @@ public class MenuCompat implements Menu {
 		return addInternal(0, 0, title);
 	}
 
+	@Override
 	public MenuItem add(int titleRes) {
 		return addInternal(0, 0, mResources.getString(titleRes));
 	}
