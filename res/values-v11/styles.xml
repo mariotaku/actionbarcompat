@@ -16,9 +16,13 @@
 
 <resources>
 
-	<style name="Theme" parent="android:style/Theme.Holo"/>
+	<style name="Theme" parent="@android:style/Theme"/>
 
-	<style name="Theme.ActionBarCompat">
+	<style name="Theme.Holo" parent="@android:style/Theme.Holo">
+		<item name="android:windowContentOverlay">@drawable/actionbarcompat_shadow</item>
+	</style>
+
+	<style name="Theme.Holo.DialogWhenLarge" parent="@android:style/Theme.Holo.DialogWhenLarge">
 		<item name="android:windowContentOverlay">@drawable/actionbarcompat_shadow</item>
 	</style>
 

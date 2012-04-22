@@ -3,36 +3,40 @@
 
 <resources>
 
-	<style name="Theme" parent="android:style/Theme"/>
+	<style name="Theme" parent="@android:style/Theme"/>
 
-	<style name="Theme.ActionBarCompat">
+	<style name="Theme.Holo">
 		<item name="android:windowTitleSize">@dimen/actionbarcompat_height</item>
-		<item name="android:windowTitleBackgroundStyle">@style/ActionBarCompat</item>
+		<item name="android:windowTitleBackgroundStyle">@style/Widget.ActionBar</item>
 		<item name="android:windowContentOverlay">@drawable/actionbarcompat_shadow</item>
 
 		<!-- for programmatic instantiation -->
-		<item name="actionbarCompatTitleStyle">@style/ActionBarCompatTitle</item>
-		<item name="actionbarCompatItemStyle">@style/ActionBarCompatItem</item>
-		<item name="actionbarCompatItemHomeStyle">@style/ActionBarCompatHomeItem</item>
-		<item name="actionbarCompatProgressIndicatorStyle">@style/ActionBarCompatProgressIndicator</item>
+		<item name="actionbarCompatTitleStyle">@style/Widget.ActionBarTitle</item>
+		<item name="actionbarCompatItemStyle">@style/Widget.ActionBarItem</item>
+		<item name="actionbarCompatItemHomeStyle">@style/Widget.ActionBarHomeItem</item>
+		<item name="actionbarCompatProgressIndicatorStyle">@style/Widget.ActionBarProgressIndicator</item>
 	</style>
 
-	<style name="ActionBarCompat">
+	<style name="Theme.Holo.DialogWhenLarge"></style>
+
+	<style name="Widget"/>
+
+	<style name="Widget.ActionBar">
 		<item name="android:background">#000000</item>
 	</style>
 
-	<style name="ActionBarCompatItemBase">
+	<style name="Widget.ActionBarItemBase">
 
 		<!-- layout_width/height must be set in code -->
 		<item name="android:scaleType">center</item>
 		<item name="android:background">@drawable/actionbarcompat_menu_button</item>
 	</style>
 
-	<style name="ActionBarCompatProgressIndicator" parent="android:style/Widget.ProgressBar.Large">
+	<style name="Widget.ActionBarProgressIndicator" parent="@android:style/Widget.ProgressBar.Large">
 		<item name="android:indeterminate">true</item>
 	</style>
 
-	<style name="ActionBarCompatTitleBase">
+	<style name="Widget.ActionBarTitleBase">
 		<item name="android:id">@id/actionbarcompat_title</item>
 		<!-- layout_width/height/weight must be set in code -->
 		<item name="android:gravity">center_vertical</item>
@@ -43,12 +47,12 @@
 		<item name="android:ellipsize">marquee</item>
 	</style>
 
-	<style name="ActionBarCompatTitle" parent="style/ActionBarCompatTitleBase">
+	<style name="Widget.ActionBarTitle" parent="@style/Widget.ActionBarTitleBase">
 		<item name="android:textColor">#ffffff</item>
 	</style>
 
-	<style name="ActionBarCompatItem" parent="style/ActionBarCompatItemBase"></style>
+	<style name="Widget.ActionBarItem" parent="@style/Widget.ActionBarItemBase"></style>
 
-	<style name="ActionBarCompatHomeItem" parent="style/ActionBarCompatItemBase"></style>
+	<style name="Widget.ActionBarHomeItem" parent="@style/Widget.ActionBarItemBase"></style>
 
 </resources>

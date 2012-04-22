@@ -28,6 +28,8 @@
 		android:layout_weight="0"
 		android:background="@drawable/actionbarcompat_menu_button"
 		android:gravity="center_vertical|left"
+		android:padding="4dip"
+		android:scaleType="fitCenter"
 		android:src="@drawable/ic_menu_actionbarcompat_home"/>
 
 	<LinearLayout

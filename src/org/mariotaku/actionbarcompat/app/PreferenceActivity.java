@@ -1,9 +1,8 @@
 package org.mariotaku.actionbarcompat.app;
 
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
 
-public class ActionBarPreferenceActivity extends PreferenceActivity {
+public class PreferenceActivity extends android.preference.PreferenceActivity {
 
 	ActionBarCompat mActionBarCompat = ActionBarCompat.getInstance(this);
 
