@@ -1,35 +1,46 @@
 package org.mariotaku.actionbarcompat.app;
 
+import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 
-public class FragmentActivity extends android.support.v4.app.FragmentActivity {
+public class ActionBarFragmentActivity extends FragmentActivity {
 
 	private ActionBarCompat mActionBarCompat = ActionBarCompat.getInstance(this);
 	private boolean mActionBarInitialized = false;
-
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		mActionBarCompat.initCompat();
-	}
-
-	@Override
-	public void onPostCreate(Bundle savedInstanceState) {
-		if (!mActionBarInitialized) {
-			mActionBarInitialized = mActionBarCompat.initActionBar();
-		}
-		super.onPostCreate(savedInstanceState);
-	}
 
 	@Override
 	public MenuInflater getMenuInflater() {
 		return mActionBarCompat.getMenuInflater(super.getMenuInflater());
 	}
 
+	public ActionBar getSupportActionBar() {
+		if (!mActionBarInitialized) {
+			mActionBarInitialized = mActionBarCompat.setCustomTitleView();
+		}
+		return mActionBarCompat;
+		
+	}
+
+	@Override
+	public void invalidateOptionsMenu() {
+		//super.invalidateOptionsMenu();
+	}
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		mActionBarCompat.requestCustomTitleView();
+		super.onCreate(savedInstanceState);
+	}
+
+	public void setSupportProgressBarIndeterminateVisibility(boolean visible) {
+
+	}
+	
 	/**
 	 * Base action bar-aware implementation for
 	 * {@link Activity#onCreateOptionsMenu(android.view.Menu)}.
@@ -45,10 +56,24 @@ public class FragmentActivity extends android.support.v4.app.FragmentActivity {
 	}
 
 	@Override
+	public void onPostCreate(Bundle savedInstanceState) {
+		if (!mActionBarInitialized) {
+			mActionBarInitialized = mActionBarCompat.setCustomTitleView();
+		}
+		super.onPostCreate(savedInstanceState);
+	}
+
+	@Override
+	public void onTitleChanged(CharSequence title, int color) {
+		mActionBarCompat.setTitle(title);
+		super.onTitleChanged(title, color);
+	}
+
+	@Override
 	public void setContentView(int layoutResID) {
 		super.setContentView(layoutResID);
 		if (!mActionBarInitialized) {
-			mActionBarInitialized = mActionBarCompat.initActionBar();
+			mActionBarInitialized = mActionBarCompat.setCustomTitleView();
 		}
 	}
 
@@ -56,7 +81,7 @@ public class FragmentActivity extends android.support.v4.app.FragmentActivity {
 	public void setContentView(View view) {
 		super.setContentView(view);
 		if (!mActionBarInitialized) {
-			mActionBarInitialized = mActionBarCompat.initActionBar();
+			mActionBarInitialized = mActionBarCompat.setCustomTitleView();
 		}
 	}
 
@@ -64,14 +89,8 @@ public class FragmentActivity extends android.support.v4.app.FragmentActivity {
 	public void setContentView(View view, LayoutParams params) {
 		super.setContentView(view, params);
 		if (!mActionBarInitialized) {
-			mActionBarInitialized = mActionBarCompat.initActionBar();
+			mActionBarInitialized = mActionBarCompat.setCustomTitleView();
 		}
-	}
-
-	@Override
-	public void onTitleChanged(CharSequence title, int color) {
-		mActionBarCompat.setTitle(title);
-		super.onTitleChanged(title, color);
 	}
 
 	@Override
@@ -84,10 +103,6 @@ public class FragmentActivity extends android.support.v4.app.FragmentActivity {
 	public void setTitle(int titleId) {
 		mActionBarCompat.setTitle(titleId);
 		super.setTitle(titleId);
-	}
-
-	public ActionBarCompat getActionBarCompat() {
-		return mActionBarCompat;
 	}
 
 }
