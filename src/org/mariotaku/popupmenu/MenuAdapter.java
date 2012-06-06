@@ -26,7 +26,7 @@ final class MenuAdapter extends ArrayAdapter<MenuItem> {
 	};
 
 	public MenuAdapter(Context context) {
-		super(context, R.layout.menu_item);
+		super(context, R.layout.menu_list_item);
 	}
 
 	@Override
@@ -58,7 +58,7 @@ final class MenuAdapter extends ArrayAdapter<MenuItem> {
 				add(item);
 			}
 		}
-		sort(ORDER_COMPARATOR);
+		//sort(ORDER_COMPARATOR);
 	}
 
 }

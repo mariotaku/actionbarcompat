@@ -34,13 +34,14 @@ import android.widget.PopupWindow.OnDismissListener;
  */
 public class PopupMenu implements OnDismissListener, OnItemClickListener, OnTouchListener {
 	private ListView mListView;
-	private View mRootView, mAnchorView;
+	private View mRootView;
 
 	private OnMenuItemClickListener mItemClickListener;
 	private OnDismissListener mDismissListener;
 
 	private Menu mMenu;
-	private Context mContext;
+	private final Context mContext;
+	private final View mView;
 	private PopupWindow mWindow;
 	private WindowManager mWindowManager;
 
@@ -55,8 +56,9 @@ public class PopupMenu implements OnDismissListener, OnItemClickListener, OnTouc
 	 * 
 	 * @param context Context
 	 */
-	public PopupMenu(Context context) {
+	public PopupMenu(Context context, View view) {
 		mContext = context;
+		mView = view;
 		mWindow = new PopupWindow(context);
 		mWindow.setTouchInterceptor(this);
 		mWindowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
@@ -77,6 +79,10 @@ public class PopupMenu implements OnDismissListener, OnItemClickListener, OnTouc
 	public Menu getMenu() {
 		return mMenu;
 	}
+	
+	void setMenu(Menu menu) {
+		mMenu = menu;
+	}
 
 	public void inflate(int menuRes) {
 		new MenuInflater(mContext).inflate(menuRes, mMenu);
@@ -96,7 +102,7 @@ public class PopupMenu implements OnDismissListener, OnItemClickListener, OnTouc
 		MenuItem item = mAdapter.getItem(position);
 		if (item.hasSubMenu()) {
 			dismiss();
-			showSubMenu(mAnchorView, item.getSubMenu());
+			showMenu(item.getSubMenu(), false);
 		} else {
 			if (mItemClickListener != null) {
 				mItemClickListener.onMenuItemClick(item);
@@ -164,21 +170,16 @@ public class PopupMenu implements OnDismissListener, OnItemClickListener, OnTouc
 		mWindow.setContentView(mRootView);
 	}
 
-	public void show(View anchor) {
-		showMenu(anchor, getMenu());
+	public void show() {
+		showMenu(getMenu(), true);
 	}
 
-	public void showMenu(View anchor, Menu menu) {
+	private void showMenu(Menu menu, boolean set_anchor) {
 		mAdapter.setMenu(menu);
-		mAnchorView = anchor;
-		setAnchor(anchor);
-		mWindow.showAtLocation(anchor, Gravity.NO_GRAVITY, mPosX, mPosY);
+		if (set_anchor) setAnchor(mView);
+		mWindow.showAtLocation(mView, Gravity.LEFT|Gravity.TOP, mPosX, mPosY);
 	}
-
-	public void showSubMenu(View anchor, SubMenu subMenu) {
-		showMenu(anchor, subMenu);
-	}
-
+	
 	/**
 	 * On pre show
 	 */

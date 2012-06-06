@@ -17,18 +17,19 @@
 <resources>
 
 	<style name="Theme.ActionBar" parent="android:Theme.Holo">
-		<item name="android:windowContentOverlay">@drawable/actionbar_shadow</item>
 		<item name="actionBarBackground">@drawable/actionbar_bg_dark_holo</item>
 	</style>
 
 	<style name="Theme.ActionBar.Light" parent="android:Theme.Holo.Light">
-		<item name="android:windowContentOverlay">@drawable/actionbar_shadow</item>
 		<item name="actionBarBackground">@drawable/actionbar_bg_light_holo</item>
 	</style>
 
 	<style name="Theme.ActionBar.Light.DarkActionBar" parent="android:Theme.Holo.Light.DarkActionBar">
-		<item name="android:windowContentOverlay">@drawable/actionbar_shadow</item>
 		<item name="actionBarBackground">@drawable/actionbar_bg_light_darkactionbar_holo</item>
 	</style>
+
+	<style name="Theme.ActionBar.Dialog" parent="android:Theme.Holo.Dialog"/>
+
+	<style name="Theme.ActionBar.Light.Dialog" parent="android:Theme.Holo.Light.Dialog"/>
 
 </resources>
