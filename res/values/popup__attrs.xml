@@ -16,6 +16,7 @@
 
 <resources>
 
+	<attr name="menuBarBackground" format="reference"/>
 	<attr name="popupBackground" format="reference"/>
 
 </resources>

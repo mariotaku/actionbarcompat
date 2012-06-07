@@ -16,7 +16,8 @@
 		<item name="actionBarItemHomeStyle">@style/Widget.ActionBarHomeItem</item>
 		<item name="actionBarHomeAsUpIndicator">@drawable/actionbar_back_dark</item>
 		<item name="actionBarBackground">@drawable/actionbar_bg_dark_holo</item>
-		<item name="android:popupBackground">@drawable/popup_holo_dark</item>
+		<item name="menuBarBackground">@drawable/actionbar_bg_bottom_dark_holo</item>
+		<item name="popupBackground">@drawable/popup_holo_dark</item>
 	</style>
 
 	<style name="Theme.ActionBar.Light" parent="android:Theme.Light">
@@ -32,7 +33,8 @@
 		<item name="actionBarItemHomeStyle">@style/Widget.ActionBarHomeItem.Light</item>
 		<item name="actionBarHomeAsUpIndicator">@drawable/actionbar_back_light</item>
 		<item name="actionBarBackground">@drawable/actionbar_bg_light_holo</item>
-		<item name="android:popupBackground">@drawable/popup_holo_light</item>
+		<item name="menuBarBackground">@drawable/actionbar_bg_bottom_light_holo</item>
+		<item name="popupBackground">@drawable/popup_holo_light</item>
 	</style>
 
 	<style name="Theme.ActionBar.Light.DarkActionBar">
@@ -42,9 +44,10 @@
 		<item name="actionBarTitleStyle">@style/Widget.ActionBarTitle.Inverse</item>
 		<item name="actionBarHomeAsUpIndicator">@drawable/actionbar_back_dark</item>
 		<item name="actionBarBackground">@drawable/actionbar_bg_light_darkactionbar_holo</item>
+		<item name="menuBarBackground">@drawable/actionbar_bg_bottom_light_darkactionbar_holo</item>
 	</style>
 
-	<style name="Theme.ActionBar.Dialog">
+	<style name="Theme.ActionBar.Dialog" parent="android:Theme">
 		<item name="android:windowFrame">@null</item>
 		<item name="android:windowTitleStyle">@style/DialogWindowTitle.Holo</item>
 		<item name="android:windowBackground">@drawable/popup_holo_dark</item>
@@ -52,9 +55,11 @@
 		<item name="android:windowContentOverlay">@null</item>
 		<item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
 		<item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+		<item name="menuBarBackground">@drawable/actionbar_bg_bottom_light_holo</item>
+		<item name="popupBackground">@drawable/popup_holo_light</item>
 	</style>
 
-	<style name="Theme.ActionBar.Light.Dialog">
+	<style name="Theme.ActionBar.Light.Dialog" parent="android:Theme.Light">
 		<item name="android:windowFrame">@null</item>
 		<item name="android:windowTitleStyle">@style/DialogWindowTitle.Holo.Light</item>
 		<item name="android:windowBackground">@drawable/popup_holo_light</item>
@@ -62,6 +67,8 @@
 		<item name="android:windowContentOverlay">@null</item>
 		<item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
 		<item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+		<item name="menuBarBackground">@drawable/actionbar_bg_bottom_dark_holo</item>
+		<item name="popupBackground">@drawable/popup_holo_light</item>
 	</style>
 
 	<style name="WindowTitle.Holo" parent="android:Widget.TextView">

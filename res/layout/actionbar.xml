@@ -36,7 +36,8 @@
 			android:layout_height="fill_parent"
 			android:gravity="center_vertical|left"
 			android:scaleType="fitCenter"
-			android:src="?actionBarHomeAsUpIndicator"/>
+			android:src="?actionBarHomeAsUpIndicator"
+			android:visibility="gone"/>
 
 		<ImageView
 			android:id="@id/actionbar_icon"

@@ -74,13 +74,18 @@ class ActionBarCompatHoneycomb extends ActionBarCompat {
 	}
 
 	@Override
-	public boolean requestCustomTitleView() {
-		return true;
+	public void invalidateOptionsMenu() {
+
 	}
 
 	@Override
 	public boolean isShowing() {
 		return mActivity.getActionBar().isShowing();
+	}
+
+	@Override
+	public boolean requestCustomTitleView() {
+		return true;
 	}
 
 	@Override
@@ -105,7 +110,7 @@ class ActionBarCompatHoneycomb extends ActionBarCompat {
 
 	@Override
 	public void setCustomView(View view, LayoutParams params) {
-		ActionBar.LayoutParams p = new ActionBar.LayoutParams(params.width, params.height); 
+		ActionBar.LayoutParams p = new ActionBar.LayoutParams(params.width, params.height);
 		if (params instanceof ActionBar.LayoutParams) {
 			p = (ActionBar.LayoutParams) params;
 		}
@@ -198,5 +203,10 @@ class ActionBarCompatHoneycomb extends ActionBarCompat {
 	@Override
 	public void show() {
 		mActivity.getActionBar().show();
+	}
+
+	@Override
+	void hideInRealMenu(Menu menu) {
+
 	}
 }

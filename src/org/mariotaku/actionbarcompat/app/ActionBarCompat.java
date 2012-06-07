@@ -2,8 +2,13 @@ package org.mariotaku.actionbarcompat.app;
 
 import android.app.Activity;
 import android.os.Build;
+import android.view.Menu;
 
 public abstract class ActionBarCompat implements ActionBar {
+
+	abstract void hideInRealMenu(Menu menu);
+
+	abstract void invalidateOptionsMenu();
 
 	abstract boolean requestCustomTitleView();
 
