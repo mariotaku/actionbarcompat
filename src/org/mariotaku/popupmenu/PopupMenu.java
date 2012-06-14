@@ -70,7 +70,20 @@ public class PopupMenu implements OnDismissListener, OnItemClickListener, OnTouc
 		setView();
 
 	}
+	
+	public void setAnchorByTouch(boolean enabled) {
+		mView.setOnTouchListener(enabled ? mViewTouchListener : null);
+	}
 
+	private OnTouchListener mViewTouchListener = new OnTouchListener() {
+
+		@Override
+		public boolean onTouch(View v, MotionEvent event) {
+			return true;
+		}
+		
+	};
+	
 	/**
 	 * Dismiss the popup window.
 	 */

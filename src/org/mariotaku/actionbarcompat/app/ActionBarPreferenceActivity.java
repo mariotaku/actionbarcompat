@@ -3,6 +3,7 @@ package org.mariotaku.actionbarcompat.app;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+import android.view.Window;
 
 public class ActionBarPreferenceActivity extends PreferenceActivity {
 
@@ -13,11 +14,28 @@ public class ActionBarPreferenceActivity extends PreferenceActivity {
 	}
 
 	public void invalidateSupportOptionsMenu() {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
 			new MethodsCompat().invalidateOptionsMenu(this);
 		} else {
-
+			mActionBarCompat.invalidateOptionsMenu();
 		}
+	}
+	
+	public void requestSupportWindowFeature(int featureId) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+			requestWindowFeature(featureId);
+		} else {
+			switch (featureId) {
+				case Window.FEATURE_INDETERMINATE_PROGRESS:{
+					mActionBarCompat.setProgressBarIndeterminateEnabled(true);
+				}
+			}
+		}
+	}
+	
+
+	public void setSupportProgressBarIndeterminateVisibility(boolean visible) {
+		mActionBarCompat.setProgressBarIndeterminateVisibility(visible);
 	}
 
 	@Override

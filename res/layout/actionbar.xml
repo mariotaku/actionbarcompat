@@ -85,6 +85,16 @@
 		android:orientation="horizontal"
 		android:visibility="gone"/>
 
+	<ProgressBar
+		android:id="@id/actionbar_progress_indeterminate"
+		style="?actionBarIndeterminateProgressStyle"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center_vertical"
+		android:layout_weight="0"
+		android:indeterminateOnly="true"
+		android:visibility="gone"/>
+
 	<LinearLayout
 		android:id="@id/actionbar_menu_buttons"
 		android:layout_width="wrap_content"

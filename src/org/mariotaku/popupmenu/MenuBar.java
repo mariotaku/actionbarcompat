@@ -39,6 +39,7 @@ public class MenuBar extends TableRow implements PopupMenu.OnMenuItemClickListen
 	}
 
 	public void inflate(int menuRes) {
+		mMenu.clear();
 		new MenuInflater(mContext).inflate(menuRes, mMenu);
 	}
 

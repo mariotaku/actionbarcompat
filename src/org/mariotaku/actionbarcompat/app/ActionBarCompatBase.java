@@ -561,4 +561,18 @@ class ActionBarCompatBase extends ActionBarCompat {
 		}
 
 	}
+
+	@Override
+	void setProgressBarIndeterminateVisibility(boolean visible) {
+		if(mProgressBarIndeterminateEnabled )mActionBarView.findViewById(R.id.actionbar_progress_indeterminate).setVisibility(visible ? View.VISIBLE : View.GONE);
+		
+	}
+
+	private boolean mProgressBarIndeterminateEnabled = false;
+	
+	@Override
+	void setProgressBarIndeterminateEnabled(boolean enabled) {
+		mProgressBarIndeterminateEnabled = enabled;
+		
+	}
 }

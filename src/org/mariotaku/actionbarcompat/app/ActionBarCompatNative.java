@@ -9,12 +9,12 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 
-@TargetApi(11)
-class ActionBarCompatHoneycomb extends ActionBarCompat {
+@TargetApi(14)
+class ActionBarCompatNative extends ActionBarCompat {
 
 	private Activity mActivity;
 
-	public ActionBarCompatHoneycomb(Activity activity) {
+	public ActionBarCompatNative(Activity activity) {
 		mActivity = activity;
 	}
 
@@ -208,5 +208,15 @@ class ActionBarCompatHoneycomb extends ActionBarCompat {
 	@Override
 	void hideInRealMenu(Menu menu) {
 
+	}
+
+	@Override
+	void setProgressBarIndeterminateVisibility(boolean visible) {
+		mActivity.setProgressBarIndeterminateVisibility(visible);
+	}
+
+	@Override
+	void setProgressBarIndeterminateEnabled(boolean enabled) {
+		
 	}
 }

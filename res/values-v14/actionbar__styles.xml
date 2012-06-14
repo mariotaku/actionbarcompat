@@ -18,20 +18,26 @@
 
 	<style name="Theme.ActionBar" parent="android:Theme.Holo">
 		<item name="actionBarBackground">@drawable/actionbar_bg_dark_holo</item>
+		<item name="actionBarIndeterminateProgressStyle">?android:attr/progressBarStyleSmall</item>
 		<item name="menuBarBackground">@drawable/actionbar_bg_bottom_dark_holo</item>
 		<item name="popupBackground">@drawable/popup_holo_dark</item>
+		<item name="android:actionBarStyle">@style/Widget.ActionBar</item>
 	</style>
 
 	<style name="Theme.ActionBar.Light" parent="android:Theme.Holo.Light">
 		<item name="actionBarBackground">@drawable/actionbar_bg_light_holo</item>
+		<item name="actionBarIndeterminateProgressStyle">?android:attr/progressBarStyleSmall</item>
 		<item name="menuBarBackground">@drawable/actionbar_bg_bottom_light_holo</item>
 		<item name="popupBackground">@drawable/popup_holo_light</item>
+		<item name="android:actionBarStyle">@style/Widget.Light.ActionBar</item>
 	</style>
 
 	<style name="Theme.ActionBar.Light.DarkActionBar" parent="android:Theme.Holo.Light.DarkActionBar">
 		<item name="actionBarBackground">@drawable/actionbar_bg_light_darkactionbar_holo</item>
+		<item name="actionBarIndeterminateProgressStyle">?android:attr/progressBarStyleSmall</item>
 		<item name="menuBarBackground">@drawable/actionbar_bg_bottom_light_darkactionbar_holo</item>
 		<item name="popupBackground">@drawable/popup_holo_light</item>
+		<item name="android:actionBarStyle">@style/Widget.Light.ActionBar.Solid.Inverse</item>
 	</style>
 
 	<style name="Theme.ActionBar.Dialog" parent="android:Theme.Holo.Dialog">
@@ -42,6 +48,21 @@
 	<style name="Theme.ActionBar.Light.Dialog" parent="android:Theme.Holo.Light.Dialog">
 		<item name="menuBarBackground">@drawable/actionbar_bg_bottom_light_holo</item>
 		<item name="popupBackground">@drawable/popup_holo_dark</item>
+	</style>
+
+	<style name="Widget.ActionBar" parent="android:Widget.Holo.ActionBar">
+		<item name="android:background">?actionBarBackground</item>
+		<item name="android:indeterminateProgressStyle">?actionBarIndeterminateProgressStyle</item>
+	</style>
+
+	<style name="Widget.Light.ActionBar" parent="android:Widget.Holo.Light.ActionBar">
+		<item name="android:background">?actionBarBackground</item>
+		<item name="android:indeterminateProgressStyle">?actionBarIndeterminateProgressStyle</item>
+	</style>
+
+	<style name="Widget.Light.ActionBar.Solid.Inverse" parent="android:Widget.Holo.Light.ActionBar.Solid.Inverse">
+		<item name="android:background">?actionBarBackground</item>
+		<item name="android:indeterminateProgressStyle">?actionBarIndeterminateProgressStyle</item>
 	</style>
 
 </resources>

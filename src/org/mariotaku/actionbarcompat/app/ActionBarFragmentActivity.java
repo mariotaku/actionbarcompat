@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.view.Window;
 import android.view.ViewGroup.LayoutParams;
 
 public class ActionBarFragmentActivity extends FragmentActivity {
@@ -26,9 +27,21 @@ public class ActionBarFragmentActivity extends FragmentActivity {
 		return mActionBarCompat;
 
 	}
+	
+	public void requestSupportWindowFeature(int featureId) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+			requestWindowFeature(featureId);
+		} else {
+			switch (featureId) {
+				case Window.FEATURE_INDETERMINATE_PROGRESS:{
+					mActionBarCompat.setProgressBarIndeterminateEnabled(true);
+				}
+			}
+		}
+	}
 
 	public void invalidateSupportOptionsMenu() {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
 			new MethodsCompat().invalidateOptionsMenu(this);
 		} else {
 			mActionBarCompat.invalidateOptionsMenu();
@@ -101,7 +114,7 @@ public class ActionBarFragmentActivity extends FragmentActivity {
 	}
 
 	public void setSupportProgressBarIndeterminateVisibility(boolean visible) {
-
+		mActionBarCompat.setProgressBarIndeterminateVisibility(visible);
 	}
 
 	@Override
