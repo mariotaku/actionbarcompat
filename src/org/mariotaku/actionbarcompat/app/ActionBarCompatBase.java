@@ -380,10 +380,10 @@ class ActionBarCompatBase extends ActionBarCompat {
 
 	@Override
 	void hideInRealMenu(Menu menu) {
-		if (menu instanceof MenuImpl) return;
-		for (MenuItem item : ((MenuImpl) mActionBarMenu).getMenuItems()) {
-			MenuItem realItem = menu.findItem(item.getItemId());
-			if (realItem != null) {
+		if (menu instanceof MenuImpl||menu == null) return;
+		for (int i = 0; i < menu.size(); i++) {
+			MenuItem realItem = menu.getItem(i);
+			if (mActionBarMenu.findItem(realItem.getItemId()) != null) {
 				realItem.setVisible(false);
 			}
 		}
@@ -405,6 +405,15 @@ class ActionBarCompatBase extends ActionBarCompat {
 		public void inflate(int menuRes, Menu menu) {
 			mInflater.inflate(menuRes, menu);
 			loadActionBarMetadata(menu, menuRes);
+		}
+		
+		private boolean hasMenuItem(Menu menu, long id) {
+			for (int i = 0; i < menu.size(); i++) {
+				if (menu.getItem(i).getItemId() == id) {
+					return true;
+				}
+			}
+			return false;
 		}
 
 		/**
@@ -445,7 +454,7 @@ class ActionBarCompatBase extends ActionBarCompat {
 							boolean isShowAsAction = showAsAction == MenuItem.SHOW_AS_ACTION_ALWAYS
 									|| showAsAction == MenuItem.SHOW_AS_ACTION_IF_ROOM
 									|| showAsAction == MenuItem.SHOW_AS_ACTION_WITH_TEXT;
-							if (isShowAsAction) {
+							if (isShowAsAction && !hasMenuItem(mActionBarMenu, item.getItemId()) && mActionBarMenu instanceof MenuImpl) {
 								mActionBarMenu.add(item.getGroupId(), item.getItemId(), item.getOrder(),
 										item.getTitle()).setIcon(item.getIcon());
 							}

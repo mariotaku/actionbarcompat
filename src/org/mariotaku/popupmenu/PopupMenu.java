@@ -207,7 +207,7 @@ public class PopupMenu implements OnDismissListener, OnItemClickListener, OnTouc
 
 		final int[] location = new int[2];
 
-		anchor.getLocationOnScreen(location);
+		anchor.getLocationInWindow(location);
 
 		Rect anchorRect = new Rect(location[0], location[1], location[0] + anchor.getWidth(), location[1]
 				+ anchor.getHeight());

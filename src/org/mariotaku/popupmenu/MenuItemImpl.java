@@ -1,5 +1,6 @@
 package org.mariotaku.popupmenu;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -34,6 +35,7 @@ public class MenuItemImpl implements MenuItem {
 		return false;
 	}
 
+	@TargetApi(14)
 	@Override
 	public ActionProvider getActionProvider() {
 		// TODO Auto-generated method stub
@@ -131,11 +133,13 @@ public class MenuItemImpl implements MenuItem {
 		return enabled;
 	}
 
+	@TargetApi(14)
 	@Override
 	public boolean isVisible() {
 		return visible;
 	}
 
+	@TargetApi(14)
 	@Override
 	public MenuItem setActionProvider(ActionProvider actionProvider) {
 		// TODO Auto-generated method stub
@@ -202,6 +206,7 @@ public class MenuItemImpl implements MenuItem {
 		return this;
 	}
 
+	@TargetApi(14)
 	@Override
 	public MenuItem setOnActionExpandListener(OnActionExpandListener listener) {
 		// TODO Auto-generated method stub

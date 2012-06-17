@@ -13,7 +13,6 @@ import android.view.SubMenu;
 public class MenuImpl implements Menu {
 
 	private final List<MenuItem> mMenuItems;
-	private boolean mIsQwerty;
 	private final Context mContext;
 
 	public MenuImpl(Context context) {
@@ -203,7 +202,6 @@ public class MenuImpl implements Menu {
 
 	@Override
 	public void setQwertyMode(boolean isQwerty) {
-		mIsQwerty = isQwerty;
 
 	}
 

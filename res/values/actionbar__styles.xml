@@ -8,7 +8,8 @@
 		<item name="android:windowTitleSize">@dimen/actionbar_height</item>
 		<item name="android:windowTitleBackgroundStyle">@style/Widget.ActionBar</item>
 		<item name="android:windowContentOverlay">@drawable/actionbar_shadow</item>
-		<item name="android:colorBackgroundCacheHint">#00000000</item>
+		<!-- <item name="android:colorBackgroundCacheHint">@null</item> -->
+
 
 		<!-- for programmatic instantiation -->
 		<item name="actionBarTitleStyle">@style/Widget.ActionBarTitle</item>
@@ -26,7 +27,8 @@
 		<item name="android:windowTitleSize">@dimen/actionbar_height</item>
 		<item name="android:windowTitleBackgroundStyle">@style/Widget.ActionBar</item>
 		<item name="android:windowContentOverlay">@drawable/actionbar_shadow</item>
-		<item name="android:colorBackgroundCacheHint">#00000000</item>
+		<!-- <item name="android:colorBackgroundCacheHint">@null</item> -->
+
 
 		<!-- for programmatic instantiation -->
 		<item name="actionBarTitleStyle">@style/Widget.ActionBarTitle</item>

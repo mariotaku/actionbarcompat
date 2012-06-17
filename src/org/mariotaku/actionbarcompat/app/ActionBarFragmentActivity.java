@@ -3,6 +3,7 @@ package org.mariotaku.actionbarcompat.app;
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -63,8 +64,11 @@ public class ActionBarFragmentActivity extends FragmentActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		boolean retValue = false;
-		retValue |= mActionBarCompat.hideMenuInActionBar(menu);
+		if (mActionBarCompat instanceof ActionBarCompatBase && mAttachedFragment != null) {
+			mAttachedFragment.onCreateOptionsMenu(menu, getMenuInflater());
+		}
 		retValue |= super.onCreateOptionsMenu(menu);
+		retValue |= mActionBarCompat.hideMenuInActionBar(menu);
 		return retValue;
 	}
 
@@ -127,6 +131,17 @@ public class ActionBarFragmentActivity extends FragmentActivity {
 	public void setTitle(int titleId) {
 		mActionBarCompat.setTitle(titleId);
 		super.setTitle(titleId);
+	}
+
+	private Fragment mAttachedFragment;
+	
+	@Override
+	public void onAttachFragment(Fragment fragment) {
+		super.onAttachFragment(fragment);
+		mAttachedFragment = fragment;
+		if (mActionBarCompat instanceof ActionBarCompatBase) {
+			((ActionBarCompatBase) mActionBarCompat).createActionBarMenu();
+		}
 	}
 
 }
