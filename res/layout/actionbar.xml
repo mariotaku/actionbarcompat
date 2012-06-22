@@ -25,10 +25,9 @@
 	<LinearLayout
 		android:id="@id/actionbar_home"
 		style="?actionBarItemHomeStyle"
-		android:layout_weight="0"
-		android:gravity="center_vertical|left"
-		android:padding="4dip"
-		android:scaleType="fitCenter">
+		android:layout_width="wrap_content"
+		android:layout_height="fill_parent"
+		android:layout_weight="0">
 
 		<ImageView
 			android:id="@id/actionbar_home_as_up_indicator"
@@ -37,11 +36,11 @@
 			android:gravity="center_vertical|left"
 			android:scaleType="fitCenter"
 			android:src="?actionBarHomeAsUpIndicator"
-			android:visibility="gone"/>
+			android:visibility="invisible"/>
 
 		<ImageView
 			android:id="@id/actionbar_icon"
-			android:layout_width="wrap_content"
+			android:layout_width="32dp"
 			android:layout_height="fill_parent"
 			android:gravity="center_vertical|left"
 			android:scaleType="fitCenter"/>
@@ -49,7 +48,7 @@
 
 	<LinearLayout
 		android:id="@id/actionbar_title_view"
-		android:layout_width="wrap_content"
+		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
 		android:layout_weight="1"
 		android:gravity="center_vertical"
@@ -61,7 +60,6 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:ellipsize="marquee"
-			android:paddingLeft="4dip"
 			android:singleLine="true"
 			android:textAppearance="?android:attr/textAppearanceMedium"/>
 
@@ -70,7 +68,6 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:ellipsize="marquee"
-			android:paddingLeft="4dip"
 			android:singleLine="true"
 			android:textAppearance="?android:attr/textAppearanceSmall"
 			android:visibility="gone"/>
