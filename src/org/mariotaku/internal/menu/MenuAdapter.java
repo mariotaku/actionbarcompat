@@ -27,8 +27,8 @@ public final class MenuAdapter extends ArrayAdapter<MenuItem> {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		TextView view = (TextView) super.getView(position, convertView, parent);
-		MenuItem item = getItem(position);
+		final TextView view = (TextView) super.getView(position, convertView, parent);
+		final MenuItem item = getItem(position);
 		view.setEnabled(item.isEnabled());
 		view.setVisibility(item.isVisible() ? View.VISIBLE : View.GONE);
 		view.setCompoundDrawablesWithIntrinsicBounds(item.getIcon(), null, null, null);
@@ -42,9 +42,9 @@ public final class MenuAdapter extends ArrayAdapter<MenuItem> {
 
 	public void setMenuItems() {
 		clear();
-		List<MenuItem> items = mMenu == null ? null : ((MenuImpl) mMenu).getMenuItems();
+		final List<MenuItem> items = mMenu == null ? null : ((MenuImpl) mMenu).getMenuItems();
 		if (items == null) return;
-		for (MenuItem item : items) {
+		for (final MenuItem item : items) {
 			if (item.isVisible()) {
 				add(item);
 			}

@@ -1,5 +1,6 @@
 package org.mariotaku.internal.menu;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.ComponentName;
@@ -10,7 +11,6 @@ import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
-import java.util.ArrayList;
 
 public final class SubMenuImpl extends MenuImpl implements SubMenu {
 
@@ -18,6 +18,8 @@ public final class SubMenuImpl extends MenuImpl implements SubMenu {
 	private final MenuAdapter mAdapter;
 	private final MenuItem menuItem;
 	private final Context mContext;
+
+	private Drawable mHeaderIcon;
 
 	public SubMenuImpl(Context context, MenuItem menuItem) {
 		super(context);
@@ -30,21 +32,21 @@ public final class SubMenuImpl extends MenuImpl implements SubMenu {
 
 	@Override
 	public MenuItem add(CharSequence title) {
-		MenuItem item = new MenuItemImpl(mContext).setTitle(title);
+		final MenuItem item = new MenuItemImpl(mContext).setTitle(title);
 		mMenuItems.add(item);
 		return item;
 	}
 
 	@Override
 	public MenuItem add(int titleRes) {
-		MenuItem item = new MenuItemImpl(mContext).setTitle(titleRes);
+		final MenuItem item = new MenuItemImpl(mContext).setTitle(titleRes);
 		mMenuItems.add(item);
 		return item;
 	}
 
 	@Override
 	public MenuItem add(int groupId, int itemId, int order, CharSequence title) {
-		MenuItem item = new MenuItemImpl(mContext).setGroupId(groupId).setItemId(itemId).setOrder(order)
+		final MenuItem item = new MenuItemImpl(mContext).setGroupId(groupId).setItemId(itemId).setOrder(order)
 				.setTitle(title);
 		mMenuItems.add(order, item);
 		return item;
@@ -52,7 +54,7 @@ public final class SubMenuImpl extends MenuImpl implements SubMenu {
 
 	@Override
 	public MenuItem add(int groupId, int itemId, int order, int titleRes) {
-		MenuItem item = new MenuItemImpl(mContext).setGroupId(groupId).setItemId(itemId).setOrder(order)
+		final MenuItem item = new MenuItemImpl(mContext).setGroupId(groupId).setItemId(itemId).setOrder(order)
 				.setTitle(titleRes);
 		mMenuItems.add(order, item);
 		return item;
@@ -67,8 +69,8 @@ public final class SubMenuImpl extends MenuImpl implements SubMenu {
 
 	@Override
 	public SubMenu addSubMenu(CharSequence title) {
-		MenuItem item = new MenuItemImpl(mContext).setTitle(title);
-		SubMenu subMenu = new SubMenuImpl(mContext, item);
+		final MenuItem item = new MenuItemImpl(mContext).setTitle(title);
+		final SubMenu subMenu = new SubMenuImpl(mContext, item);
 		((MenuItemImpl) item).setSubMenu(subMenu);
 		mMenuItems.add(item);
 		return subMenu;
@@ -76,8 +78,8 @@ public final class SubMenuImpl extends MenuImpl implements SubMenu {
 
 	@Override
 	public SubMenu addSubMenu(int titleRes) {
-		MenuItem item = new MenuItemImpl(mContext).setTitle(titleRes);
-		SubMenu subMenu = new SubMenuImpl(mContext, item);
+		final MenuItem item = new MenuItemImpl(mContext).setTitle(titleRes);
+		final SubMenu subMenu = new SubMenuImpl(mContext, item);
 		((MenuItemImpl) item).setSubMenu(subMenu);
 		mMenuItems.add(item);
 		return subMenu;
@@ -85,9 +87,9 @@ public final class SubMenuImpl extends MenuImpl implements SubMenu {
 
 	@Override
 	public SubMenu addSubMenu(int groupId, int itemId, int order, CharSequence title) {
-		MenuItem item = new MenuItemImpl(mContext).setGroupId(groupId).setItemId(itemId).setOrder(order)
+		final MenuItem item = new MenuItemImpl(mContext).setGroupId(groupId).setItemId(itemId).setOrder(order)
 				.setTitle(title);
-		SubMenu subMenu = new SubMenuImpl(mContext, item);
+		final SubMenu subMenu = new SubMenuImpl(mContext, item);
 		((MenuItemImpl) item).setSubMenu(subMenu);
 		mMenuItems.add(order, item);
 		return subMenu;
@@ -95,9 +97,9 @@ public final class SubMenuImpl extends MenuImpl implements SubMenu {
 
 	@Override
 	public SubMenu addSubMenu(int groupId, int itemId, int order, int titleRes) {
-		MenuItem item = new MenuItemImpl(mContext).setGroupId(groupId).setItemId(itemId).setOrder(order)
+		final MenuItem item = new MenuItemImpl(mContext).setGroupId(groupId).setItemId(itemId).setOrder(order)
 				.setTitle(titleRes);
-		SubMenu subMenu = new SubMenuImpl(mContext, item);
+		final SubMenu subMenu = new SubMenuImpl(mContext, item);
 		((MenuItemImpl) item).setSubMenu(subMenu);
 		mMenuItems.add(order, item);
 		return subMenu;
@@ -122,7 +124,7 @@ public final class SubMenuImpl extends MenuImpl implements SubMenu {
 
 	@Override
 	public MenuItem findItem(int id) {
-		for (MenuItem item : mMenuItems) {
+		for (final MenuItem item : mMenuItems) {
 			if (item.getItemId() == id) return item;
 		}
 		return null;
@@ -145,7 +147,7 @@ public final class SubMenuImpl extends MenuImpl implements SubMenu {
 
 	@Override
 	public boolean hasVisibleItems() {
-		for (MenuItem item : mMenuItems) {
+		for (final MenuItem item : mMenuItems) {
 			if (item.isVisible()) return true;
 		}
 		return false;
@@ -166,11 +168,10 @@ public final class SubMenuImpl extends MenuImpl implements SubMenu {
 		return false;
 	}
 
-
 	@Override
 	public void removeGroup(int groupId) {
 		final List<MenuItem> items_to_remove = new ArrayList<MenuItem>();
-		for (MenuItem item : mMenuItems) {
+		for (final MenuItem item : mMenuItems) {
 			if (item.hasSubMenu()) {
 				item.getSubMenu().removeGroup(groupId);
 			} else if (item.getGroupId() == groupId) {
@@ -183,7 +184,7 @@ public final class SubMenuImpl extends MenuImpl implements SubMenu {
 	@Override
 	public void removeItem(int id) {
 		final List<MenuItem> items_to_remove = new ArrayList<MenuItem>();
-		for (MenuItem item : mMenuItems) {
+		for (final MenuItem item : mMenuItems) {
 			if (item.hasSubMenu()) {
 				item.getSubMenu().removeItem(id);
 			} else if (item.getItemId() == id) {
@@ -210,8 +211,6 @@ public final class SubMenuImpl extends MenuImpl implements SubMenu {
 		// TODO Auto-generated method stub
 
 	}
-	
-	private Drawable mHeaderIcon;
 
 	@Override
 	public SubMenu setHeaderIcon(Drawable icon) {

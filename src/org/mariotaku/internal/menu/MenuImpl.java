@@ -1,5 +1,6 @@
 package org.mariotaku.internal.menu;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.ComponentName;
@@ -9,7 +10,6 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
-import java.util.ArrayList;
 
 public class MenuImpl implements Menu {
 
@@ -37,7 +37,7 @@ public class MenuImpl implements Menu {
 
 	@Override
 	public MenuItem add(int groupId, int itemId, int order, CharSequence title) {
-		MenuItem item = new MenuItemImpl(mContext).setGroupId(groupId).setItemId(itemId).setOrder(order)
+		final MenuItem item = new MenuItemImpl(mContext).setGroupId(groupId).setItemId(itemId).setOrder(order)
 				.setTitle(title);
 		mMenuItems.add(item);
 		return item;
@@ -45,7 +45,7 @@ public class MenuImpl implements Menu {
 
 	@Override
 	public MenuItem add(int groupId, int itemId, int order, int titleRes) {
-		MenuItem item = new MenuItemImpl(mContext).setGroupId(groupId).setItemId(itemId).setOrder(order)
+		final MenuItem item = new MenuItemImpl(mContext).setGroupId(groupId).setItemId(itemId).setOrder(order)
 				.setTitle(titleRes);
 		mMenuItems.add(item);
 		return item;
@@ -69,9 +69,9 @@ public class MenuImpl implements Menu {
 
 	@Override
 	public SubMenu addSubMenu(int groupId, int itemId, int order, CharSequence title) {
-		MenuItem item = new MenuItemImpl(mContext).setGroupId(groupId).setItemId(itemId).setOrder(order)
+		final MenuItem item = new MenuItemImpl(mContext).setGroupId(groupId).setItemId(itemId).setOrder(order)
 				.setTitle(title);
-		SubMenu subMenu = new SubMenuImpl(mContext, item);
+		final SubMenu subMenu = new SubMenuImpl(mContext, item);
 		((MenuItemImpl) item).setSubMenu(subMenu);
 		if (order != 0) {
 			mMenuItems.add(order, item);
@@ -83,9 +83,9 @@ public class MenuImpl implements Menu {
 
 	@Override
 	public SubMenu addSubMenu(int groupId, int itemId, int order, int titleRes) {
-		MenuItem item = new MenuItemImpl(mContext).setGroupId(groupId).setItemId(itemId).setOrder(order)
+		final MenuItem item = new MenuItemImpl(mContext).setGroupId(groupId).setItemId(itemId).setOrder(order)
 				.setTitle(titleRes);
-		SubMenu subMenu = new SubMenuImpl(mContext, item);
+		final SubMenu subMenu = new SubMenuImpl(mContext, item);
 		((MenuItemImpl) item).setSubMenu(subMenu);
 		if (order != 0) {
 			mMenuItems.add(order, item);
@@ -107,11 +107,11 @@ public class MenuImpl implements Menu {
 
 	@Override
 	public MenuItem findItem(int id) {
-		for (MenuItem item : mMenuItems) {
+		for (final MenuItem item : mMenuItems) {
 			if (item.getItemId() == id)
 				return item;
 			else if (item.hasSubMenu()) {
-				MenuItem possibleItem = item.getSubMenu().findItem(id);
+				final MenuItem possibleItem = item.getSubMenu().findItem(id);
 
 				if (possibleItem != null) return possibleItem;
 			}
@@ -130,7 +130,7 @@ public class MenuImpl implements Menu {
 
 	@Override
 	public boolean hasVisibleItems() {
-		for (MenuItem item : mMenuItems) {
+		for (final MenuItem item : mMenuItems) {
 			if (item.isVisible()) return true;
 		}
 		return false;
@@ -154,7 +154,7 @@ public class MenuImpl implements Menu {
 	@Override
 	public void removeGroup(int groupId) {
 		final List<MenuItem> items_to_remove = new ArrayList<MenuItem>();
-		for (MenuItem item : mMenuItems) {
+		for (final MenuItem item : mMenuItems) {
 			if (item.hasSubMenu()) {
 				item.getSubMenu().removeGroup(groupId);
 			} else if (item.getGroupId() == groupId) {
@@ -167,7 +167,7 @@ public class MenuImpl implements Menu {
 	@Override
 	public void removeItem(int id) {
 		final List<MenuItem> items_to_remove = new ArrayList<MenuItem>();
-		for (MenuItem item : mMenuItems) {
+		for (final MenuItem item : mMenuItems) {
 			if (item.hasSubMenu()) {
 				item.getSubMenu().removeItem(id);
 			} else if (item.getItemId() == id) {
@@ -179,7 +179,7 @@ public class MenuImpl implements Menu {
 
 	@Override
 	public void setGroupCheckable(int group, boolean checkable, boolean exclusive) {
-		for (MenuItem item : mMenuItems) {
+		for (final MenuItem item : mMenuItems) {
 			if (item.getGroupId() == group) {
 				item.setCheckable(checkable);
 				if (exclusive) {
@@ -191,19 +191,17 @@ public class MenuImpl implements Menu {
 
 	@Override
 	public void setGroupEnabled(int group, boolean enabled) {
-		for (MenuItem item : mMenuItems) {
+		for (final MenuItem item : mMenuItems) {
 			if (item.getGroupId() == group) {
 				item.setEnabled(enabled);
 			}
 		}
 
 	}
-	
-	
 
 	@Override
 	public void setGroupVisible(int group, boolean visible) {
-		for (MenuItem item : mMenuItems) {
+		for (final MenuItem item : mMenuItems) {
 			if (item.getGroupId() == group) {
 				item.setVisible(visible);
 			}

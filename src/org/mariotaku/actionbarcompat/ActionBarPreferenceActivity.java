@@ -1,11 +1,12 @@
 package org.mariotaku.actionbarcompat;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
-import android.view.Window;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.view.Window;
 
 public class ActionBarPreferenceActivity extends PreferenceActivity {
 
@@ -14,20 +15,6 @@ public class ActionBarPreferenceActivity extends PreferenceActivity {
 
 	public ActionBar getSupportActionBar() {
 		return mActionBarCompat.getActionBar();
-	}
-
-	public void requestSupportWindowFeature(int featureId) {
-		if (mActionBarCompat instanceof ActionBarCompatNative) {
-			requestWindowFeature(featureId);
-		} else {
-			switch (featureId) {
-				case Window.FEATURE_INDETERMINATE_PROGRESS:{			
-						if (mActionBarCompat instanceof ActionBarCompatBase) {
-							((ActionBarCompatBase)mActionBarCompat).setProgressBarIndeterminateEnabled(true);
-						}				
-					}
-			}
-		}
 	}
 
 	public void invalidateSupportOptionsMenu() {
@@ -41,9 +28,9 @@ public class ActionBarPreferenceActivity extends PreferenceActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		if (mActionBarCompat instanceof ActionBarCompatBase) {
-			((ActionBarCompatBase)mActionBarCompat).requestCustomTitleView();
+			((ActionBarCompatBase) mActionBarCompat).requestCustomTitleView();
 			super.onCreate(savedInstanceState);
-			((ActionBarCompatBase)mActionBarCompat).setCustomTitleView();
+			((ActionBarCompatBase) mActionBarCompat).setCustomTitleView();
 		} else {
 			super.onCreate(savedInstanceState);
 		}
@@ -67,7 +54,7 @@ public class ActionBarPreferenceActivity extends PreferenceActivity {
 	@Override
 	public void onPostCreate(Bundle savedInstanceState) {
 		if (mActionBarCompat instanceof ActionBarCompatBase && !mActionBarInitialized) {
-			mActionBarInitialized = ((ActionBarCompatBase)mActionBarCompat).setCustomTitleView();
+			mActionBarInitialized = ((ActionBarCompatBase) mActionBarCompat).setCustomTitleView();
 		}
 		super.onPostCreate(savedInstanceState);
 	}
@@ -76,7 +63,7 @@ public class ActionBarPreferenceActivity extends PreferenceActivity {
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		super.onPrepareOptionsMenu(menu);
 		if (mActionBarCompat instanceof ActionBarCompatBase) {
-			((ActionBarCompatBase)mActionBarCompat).hideInRealMenu(menu);
+			((ActionBarCompatBase) mActionBarCompat).hideInRealMenu(menu);
 		}
 		return true;
 	}
@@ -89,11 +76,25 @@ public class ActionBarPreferenceActivity extends PreferenceActivity {
 		super.onTitleChanged(title, color);
 	}
 
+	public void requestSupportWindowFeature(int featureId) {
+		if (mActionBarCompat instanceof ActionBarCompatNative) {
+			requestWindowFeature(featureId);
+		} else {
+			switch (featureId) {
+				case Window.FEATURE_INDETERMINATE_PROGRESS: {
+					if (mActionBarCompat instanceof ActionBarCompatBase) {
+						((ActionBarCompatBase) mActionBarCompat).setProgressBarIndeterminateEnabled(true);
+					}
+				}
+			}
+		}
+	}
+
 	@Override
 	public void setContentView(int layoutResID) {
 		super.setContentView(layoutResID);
 		if (mActionBarCompat instanceof ActionBarCompatBase && !mActionBarInitialized) {
-			mActionBarInitialized = ((ActionBarCompatBase)mActionBarCompat).setCustomTitleView();
+			mActionBarInitialized = ((ActionBarCompatBase) mActionBarCompat).setCustomTitleView();
 		}
 	}
 
@@ -101,7 +102,7 @@ public class ActionBarPreferenceActivity extends PreferenceActivity {
 	public void setContentView(View view) {
 		super.setContentView(view);
 		if (mActionBarCompat instanceof ActionBarCompatBase && !mActionBarInitialized) {
-			mActionBarInitialized = ((ActionBarCompatBase)mActionBarCompat).setCustomTitleView();
+			mActionBarInitialized = ((ActionBarCompatBase) mActionBarCompat).setCustomTitleView();
 		}
 	}
 
@@ -109,13 +110,13 @@ public class ActionBarPreferenceActivity extends PreferenceActivity {
 	public void setContentView(View view, LayoutParams params) {
 		super.setContentView(view, params);
 		if (mActionBarCompat instanceof ActionBarCompatBase && !mActionBarInitialized) {
-			mActionBarInitialized = ((ActionBarCompatBase)mActionBarCompat).setCustomTitleView();
+			mActionBarInitialized = ((ActionBarCompatBase) mActionBarCompat).setCustomTitleView();
 		}
 	}
 
 	public void setSupportProgressBarIndeterminateVisibility(boolean visible) {
 		if (mActionBarCompat instanceof ActionBarCompatBase) {
-			((ActionBarCompatBase)mActionBarCompat).setProgressBarIndeterminateVisibility(visible);
+			((ActionBarCompatBase) mActionBarCompat).setProgressBarIndeterminateVisibility(visible);
 		} else {
 			setProgressBarIndeterminateVisibility(visible);
 		}

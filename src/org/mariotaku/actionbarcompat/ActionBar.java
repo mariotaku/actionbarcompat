@@ -34,5 +34,5 @@ public interface ActionBar {
 	public void setTitle(CharSequence title);
 
 	public void setTitle(int resId);
-	
+
 }

@@ -10,7 +10,7 @@ public abstract class ActionBarCompat {
 		if (this instanceof ActionBar) return (ActionBar) this;
 		return null;
 	}
-	
+
 	/**
 	 * Returns a {@link MenuInflater} for use when inflating menus. The
 	 * implementation of this method in {@link ActionBarHelperBase} returns a
@@ -20,7 +20,6 @@ public abstract class ActionBarCompat {
 	MenuInflater getMenuInflater(MenuInflater inflater) {
 		return inflater;
 	}
-	
 
 	public static ActionBarCompat getInstance(Activity activity) {
 		if (activity == null) return null;

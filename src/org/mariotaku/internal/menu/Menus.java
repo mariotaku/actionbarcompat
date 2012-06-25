@@ -34,7 +34,7 @@ final class Menus extends ArrayList<MenuItem> {
 
 	@Override
 	public boolean addAll(Collection<? extends MenuItem> collection) {
-		boolean result = super.addAll(collection);
+		final boolean result = super.addAll(collection);
 		if (mAdapter != null) {
 			mAdapter.setMenuItems();
 		}
@@ -43,7 +43,7 @@ final class Menus extends ArrayList<MenuItem> {
 
 	@Override
 	public boolean addAll(int index, Collection<? extends MenuItem> collection) {
-		boolean result = super.addAll(index, collection);
+		final boolean result = super.addAll(index, collection);
 		if (mAdapter != null) {
 			mAdapter.setMenuItems();
 		}
@@ -60,7 +60,7 @@ final class Menus extends ArrayList<MenuItem> {
 
 	@Override
 	public MenuItem remove(int index) {
-		MenuItem result = super.remove(index);
+		final MenuItem result = super.remove(index);
 		if (mAdapter != null) {
 			mAdapter.setMenuItems();
 		}
@@ -69,7 +69,7 @@ final class Menus extends ArrayList<MenuItem> {
 
 	@Override
 	public boolean remove(Object object) {
-		boolean result = super.remove(object);
+		final boolean result = super.remove(object);
 		if (mAdapter != null) {
 			mAdapter.setMenuItems();
 		}
@@ -78,7 +78,7 @@ final class Menus extends ArrayList<MenuItem> {
 
 	@Override
 	public MenuItem set(int index, MenuItem object) {
-		MenuItem result = super.set(index, object);
+		final MenuItem result = super.set(index, object);
 		if (mAdapter != null) {
 			mAdapter.setMenuItems();
 		}
@@ -87,7 +87,7 @@ final class Menus extends ArrayList<MenuItem> {
 
 	private int findInsertIndex(int order) {
 		for (int i = size() - 1; i >= 0; i--) {
-			MenuItem item = get(i);
+			final MenuItem item = get(i);
 			if (item.getOrder() <= order) return i + 1;
 		}
 		return 0;

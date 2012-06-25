@@ -1,6 +1,8 @@
 package org.mariotaku.menubar;
 
 import org.mariotaku.actionbarcompat.R;
+import org.mariotaku.internal.menu.MenuImpl;
+import org.mariotaku.popupmenu.PopupMenu;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -15,8 +17,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView.ScaleType;
 import android.widget.TableRow;
 import android.widget.Toast;
-import org.mariotaku.popupmenu.PopupMenu;
-import org.mariotaku.internal.menu.MenuImpl;
 
 public class MenuBar extends TableRow implements PopupMenu.OnMenuItemClickListener {
 
@@ -62,7 +62,7 @@ public class MenuBar extends TableRow implements PopupMenu.OnMenuItemClickListen
 
 	public void show() {
 		removeAllViews();
-		for (MenuItem item : ((MenuImpl) mMenu).getMenuItems()) {
+		for (final MenuItem item : ((MenuImpl) mMenu).getMenuItems()) {
 			if (item.isVisible()) {
 				addMenuButton(item);
 			}
@@ -79,10 +79,11 @@ public class MenuBar extends TableRow implements PopupMenu.OnMenuItemClickListen
 
 	private View addMenuButton(final MenuItem item) {
 
-		ImageButton actionButton = (ImageButton) LayoutInflater.from(mContext).inflate(R.layout.menu_button_item, null);
+		final ImageButton actionButton = (ImageButton) LayoutInflater.from(mContext).inflate(R.layout.menu_button_item,
+				null);
 
 		@SuppressWarnings("deprecation")
-		LayoutParams params = new LayoutParams((int) getResources().getDimension(R.dimen.actionbar_button_width),
+		final LayoutParams params = new LayoutParams((int) getResources().getDimension(R.dimen.actionbar_button_width),
 				ViewGroup.LayoutParams.FILL_PARENT);
 		params.weight = 1;
 
@@ -101,7 +102,7 @@ public class MenuBar extends TableRow implements PopupMenu.OnMenuItemClickListen
 					mPopupMenu = PopupMenu.getInstance(mContext, view);
 					mPopupMenu.setOnMenuItemClickListener(MenuBar.this);
 					mPopupMenu.setMenu(item.getSubMenu());
-					mPopupMenu.show(true);
+					mPopupMenu.show();
 				} else {
 					if (mItemClickListener != null) {
 						mItemClickListener.onMenuItemClick(item);
@@ -115,7 +116,7 @@ public class MenuBar extends TableRow implements PopupMenu.OnMenuItemClickListen
 			public boolean onLongClick(View v) {
 				if (item.getItemId() == android.R.id.home) return false;
 
-				Toast t = Toast.makeText(mContext, item.getTitle(), Toast.LENGTH_SHORT);
+				final Toast t = Toast.makeText(mContext, item.getTitle(), Toast.LENGTH_SHORT);
 
 				final int[] screenPos = new int[2];
 				v.getLocationInWindow(screenPos);

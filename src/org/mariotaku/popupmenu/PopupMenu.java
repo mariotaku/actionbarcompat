@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.os.Build;
 
 /**
  * QuickAction dialog, shows action list as icon and text like the one in
@@ -15,7 +14,7 @@ import android.os.Build;
  *         Contributors: - Kevin Peck <kevinwpeck@gmail.com>
  */
 public abstract class PopupMenu {
- 
+
 	/**
 	 * Dismiss the popup window.
 	 */
@@ -26,7 +25,7 @@ public abstract class PopupMenu {
 	public abstract void inflate(int menuRes);
 
 	public abstract void setMenu(Menu menu);
-
+	
 	/**
 	 * Set listener for window dismissed. This listener will only be fired if
 	 * the quickaction dialog is dismissed by clicking outside the dialog or
@@ -43,7 +42,12 @@ public abstract class PopupMenu {
 
 	public abstract void show();
 
-	public abstract void show(boolean above_view);
+	public static PopupMenu getInstance(Context context, View view) {
+		// if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+		// return new PopupMenuNative(context, view);
+		// else
+		return new PopupMenuCompat(context, view);
+	}
 
 	/**
 	 * Listener for window dismiss
@@ -61,11 +65,4 @@ public abstract class PopupMenu {
 		public boolean onMenuItemClick(MenuItem item);
 	}
 
-	public static PopupMenu getInstance(Context context, View view) {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-			return new PopupMenuNative(context, view);
-		else
-			return new PopupMenuCompat(context, view);
-	}
-	
 }
