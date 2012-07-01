@@ -1,6 +1,7 @@
 package org.mariotaku.popupmenu;
 
 import android.content.Context;
+import android.os.Build;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,7 +26,7 @@ public abstract class PopupMenu {
 	public abstract void inflate(int menuRes);
 
 	public abstract void setMenu(Menu menu);
-	
+
 	/**
 	 * Set listener for window dismissed. This listener will only be fired if
 	 * the quickaction dialog is dismissed by clicking outside the dialog or
@@ -43,10 +44,10 @@ public abstract class PopupMenu {
 	public abstract void show();
 
 	public static PopupMenu getInstance(Context context, View view) {
-		// if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-		// return new PopupMenuNative(context, view);
-		// else
-		return new PopupMenuCompat(context, view);
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+			return new PopupMenuNative(context, view);
+		else
+			return new PopupMenuCompat(context, view);
 	}
 
 	/**

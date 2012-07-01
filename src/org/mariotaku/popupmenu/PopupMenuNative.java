@@ -1,114 +1,157 @@
 package org.mariotaku.popupmenu;
 
+import static android.widget.ListPopupWindow.INPUT_METHOD_NOT_NEEDED;
+
+import org.mariotaku.actionbarcompat.R;
+import org.mariotaku.internal.menu.MenuAdapter;
+import org.mariotaku.internal.menu.MenuImpl;
+
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.SubMenu;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListPopupWindow;
+import android.widget.PopupWindow.OnDismissListener;
 
-@TargetApi(14)
-public class PopupMenuNative extends PopupMenu {
+@TargetApi(11)
+public class PopupMenuNative extends PopupMenu implements OnDismissListener, OnItemClickListener, OnTouchListener {
 
-	final android.widget.PopupMenu mPopupMenu;
-	final Context mContext;
+	private OnMenuItemClickListener mItemClickListener;
+	private OnDismissListener mDismissListener;
 
-	private android.widget.PopupMenu.OnMenuItemClickListener mOnMenuItemClickListenerNative = new android.widget.PopupMenu.OnMenuItemClickListener() {
+	private Menu mMenu;
+	private final Context mContext;
+	private final View mView;
+	private ListPopupWindow mWindow;
 
-		@Override
-		public boolean onMenuItemClick(MenuItem item) {
-			if (mOnMenuItemClickListener == null) return false;
-			return mOnMenuItemClickListener.onMenuItemClick(item);
-		}
+	private boolean mDidAction;
 
-	};
+	private MenuAdapter mAdapter;
 
-	private android.widget.PopupMenu.OnDismissListener mOnDismissListenerNative = new android.widget.PopupMenu.OnDismissListener() {
-
-		@Override
-		public void onDismiss(android.widget.PopupMenu popup) {
-			if (mOnDismissListener == null) return;
-			mOnDismissListener.onDismiss(PopupMenuNative.this);
-		}
-
-	};
-
-	private PopupMenu.OnMenuItemClickListener mOnMenuItemClickListener;
-
-	private PopupMenu.OnDismissListener mOnDismissListener;
-
-	PopupMenuNative(Context context, View view) {
+	/**
+	 * Constructor for default vertical layout
+	 * 
+	 * @param context Context
+	 */
+	public PopupMenuNative(Context context, View view) {
 		mContext = context;
-		mPopupMenu = new android.widget.PopupMenu(context, view);
-		mPopupMenu.setOnMenuItemClickListener(mOnMenuItemClickListenerNative);
-		mPopupMenu.setOnDismissListener(mOnDismissListenerNative);
+		mView = view;
+		mAdapter = new MenuAdapter(context);
+		mMenu = new MenuImpl(mContext, mAdapter);
+		mWindow = new ListPopupWindow(context);
+		mWindow.setInputMethodMode(INPUT_METHOD_NOT_NEEDED);
+		mWindow.setAnchorView(mView);
+		mWindow.setWidth(mContext.getResources().getDimensionPixelSize(R.dimen.popup_window_width));
+		mWindow.setAdapter(mAdapter);
+		mWindow.setOnItemClickListener(this);
+		mWindow.setModal(true);
+	}
+
+	/**
+	 * Dismiss the popup window.
+	 */
+	@Override
+	public void dismiss() {
+		if (isPopupWindowShowing()) {
+			mWindow.dismiss();
+		}
+	}
+
+	@Override
+	public Menu getMenu() {
+		return mMenu;
 	}
 
 	public MenuInflater getMenuInflater() {
 		return new MenuInflater(mContext);
 	}
-	
-	@Override
-	public void dismiss() {
-		mPopupMenu.dismiss();
-	}
-
-	@Override
-	public Menu getMenu() {
-		return mPopupMenu.getMenu();
-	}
 
 	@Override
 	public void inflate(int menuRes) {
-		mPopupMenu.getMenuInflater().inflate(menuRes, getMenu());
+		new MenuInflater(mContext).inflate(menuRes, mMenu);
 	}
-	
+
 	@Override
-	public void setMenu(Menu menu) {
-		final Menu popup_menu = getMenu();
-		popup_menu.clear();
-		for (int i = 0; i < menu.size(); i++) {
-			final MenuItem item = menu.getItem(i);
-			if (!item.hasSubMenu()) {
-				final MenuItem addedItem = popup_menu.add(item.getGroupId(), item.getItemId(), item.getOrder(),
-						item.getTitle());
-				addedItem.setIcon(item.getIcon());
-			} else {
-				addSubMenu(menu, item.getSubMenu());
+	public void onDismiss() {
+		if (!mDidAction && mDismissListener != null) {
+			mDismissListener.onDismiss(this);
+		}
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
+		mDidAction = true;
+		dismiss();
+		final MenuItem item = mAdapter.getItem(position);
+		if (item.hasSubMenu()) {
+			showMenu(item.getSubMenu());
+		} else {
+			if (mItemClickListener != null) {
+				mItemClickListener.onMenuItemClick(item);
 			}
 		}
 	}
 
 	@Override
-	public void setOnDismissListener(PopupMenu.OnDismissListener listener) {
-		mOnDismissListener = listener;
+	public boolean onTouch(View v, MotionEvent event) {
+		if (event.getAction() == MotionEvent.ACTION_OUTSIDE) {
+			mWindow.dismiss();
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
-	public void setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener listener) {
-		mOnMenuItemClickListener = listener;
+	public void setMenu(Menu menu) {
+		mMenu = menu;
+	}
+
+	/**
+	 * Set listener for window dismissed. This listener will only be fired if
+	 * the quickaction dialog is dismissed by clicking outside the dialog or
+	 * clicking on sticky item.
+	 */
+	@Override
+	public void setOnDismissListener(PopupMenu.OnDismissListener listener) {
+		mWindow.setOnDismissListener(listener != null ? this : null);
+
+		mDismissListener = listener;
+	}
+
+	/**
+	 * Set listener for action item clicked.
+	 * 
+	 * @param listener Listener
+	 */
+	@Override
+	public void setOnMenuItemClickListener(OnMenuItemClickListener listener) {
+		mItemClickListener = listener;
 	}
 
 	@Override
 	public void show() {
-		mPopupMenu.show();
+		if (isPopupWindowShowing()) {
+			dismiss();
+		}
+		showMenu(getMenu());
 	}
 
-	private void addSubMenu(Menu menu, SubMenu subMenu) {
-		final MenuItem subItem = subMenu.getItem();
-		final SubMenu addedSubMenu = menu.addSubMenu(subItem.getGroupId(), subItem.getItemId(), subItem.getOrder(),
-				subItem.getTitle());
-		for (int i = 0; i < subMenu.size(); i++) {
-			final MenuItem item = subMenu.getItem(i);
-			if (!item.hasSubMenu()) {
-				final MenuItem addedItem = addedSubMenu.add(item.getGroupId(), item.getItemId(), item.getOrder(),
-						item.getTitle());
-				addedItem.setIcon(item.getIcon());
-			} else {
-				addSubMenu(addedSubMenu, item.getSubMenu());
-			}
-		}
+	private boolean isPopupWindowShowing() {
+		if (mWindow == null) return false;
+		return mWindow.isShowing();
+	}
+
+	private void showMenu(Menu menu) {
+		mAdapter.setMenu(menu);
+		mWindow.show();
 	}
 
 }
