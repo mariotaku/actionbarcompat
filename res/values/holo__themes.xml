@@ -20,11 +20,12 @@
 		<!-- List attributes -->
 		<item name="android:listChoiceIndicatorSingle">@drawable/btn_radio_holo_dark</item>
 		<item name="android:listChoiceIndicatorMultiple">@drawable/btn_checkbox_holo_dark</item>
+		<item name="android:scrollbarThumbHorizontal">@drawable/scrollbar_handle_holo_dark</item>
+		<item name="android:scrollbarThumbVertical">@drawable/scrollbar_handle_holo_dark</item>
 
 		<!-- Widget styles -->
 		<item name="android:autoCompleteTextViewStyle">@style/Widget.Holo.AutoCompleteTextView</item>
 		<item name="android:checkboxStyle">@style/Widget.Holo.CompoundButton.CheckBox</item>
-		<item name="android:editTextStyle">@style/Widget.Holo.EditText</item>
 		<item name="android:gridViewStyle">@style/Widget.Holo.GridView</item>
 		<item name="android:listViewStyle">@style/Widget.Holo.ListView</item>
 		<item name="android:progressBarStyle">@style/Widget.Holo.ProgressBar</item>
@@ -59,11 +60,11 @@
 		<!-- List attributes -->
 		<item name="android:listChoiceIndicatorSingle">@drawable/btn_radio_holo_light</item>
 		<item name="android:listChoiceIndicatorMultiple">@drawable/btn_checkbox_holo_light</item>
-
+		<item name="android:scrollbarThumbHorizontal">@drawable/scrollbar_handle_holo_light</item>
+		<item name="android:scrollbarThumbVertical">@drawable/scrollbar_handle_holo_light</item>
 		<!-- Widget styles -->
 		<item name="android:autoCompleteTextViewStyle">@style/Widget.Holo.Light.AutoCompleteTextView</item>
 		<item name="android:checkboxStyle">@style/Widget.Holo.Light.CompoundButton.CheckBox</item>
-		<item name="android:editTextStyle">@style/Widget.Holo.Light.EditText</item>
 		<item name="android:gridViewStyle">@style/Widget.Holo.GridView</item>
 		<item name="android:listViewStyle">@style/Widget.Holo.Light.ListView</item>
 		<item name="android:progressBarStyle">@style/Widget.Holo.ProgressBar</item>
@@ -98,11 +99,11 @@
 		<!-- List attributes -->
 		<item name="android:listChoiceIndicatorSingle">@drawable/btn_radio_holo_light</item>
 		<item name="android:listChoiceIndicatorMultiple">@drawable/btn_checkbox_holo_light</item>
-
+		<item name="android:scrollbarThumbHorizontal">@drawable/scrollbar_handle_holo_light</item>
+		<item name="android:scrollbarThumbVertical">@drawable/scrollbar_handle_holo_light</item>
 		<!-- Widget styles -->
 		<item name="android:autoCompleteTextViewStyle">@style/Widget.Holo.Light.AutoCompleteTextView</item>
 		<item name="android:checkboxStyle">@style/Widget.Holo.Light.CompoundButton.CheckBox</item>
-		<item name="android:editTextStyle">@style/Widget.Holo.Light.EditText</item>
 		<item name="android:gridViewStyle">@style/Widget.Holo.GridView</item>
 		<item name="android:listViewStyle">@style/Widget.Holo.Light.ListView</item>
 		<item name="android:progressBarStyle">@style/Widget.Holo.ProgressBar</item>
@@ -134,7 +135,8 @@
 		<!-- List attributes -->
 		<item name="android:listChoiceIndicatorSingle">@drawable/btn_radio_holo_dark</item>
 		<item name="android:listChoiceIndicatorMultiple">@drawable/btn_checkbox_holo_dark</item>
-
+		<item name="android:scrollbarThumbHorizontal">@drawable/scrollbar_handle_holo_dark</item>
+		<item name="android:scrollbarThumbVertical">@drawable/scrollbar_handle_holo_dark</item>
 		<!-- Widget styles -->
 		<item name="android:autoCompleteTextViewStyle">@style/Widget.Holo.AutoCompleteTextView</item>
 		<item name="android:checkboxStyle">@style/Widget.Holo.CompoundButton.CheckBox</item>
@@ -170,7 +172,8 @@
 		<!-- List attributes -->
 		<item name="android:listChoiceIndicatorSingle">@drawable/btn_radio_holo_light</item>
 		<item name="android:listChoiceIndicatorMultiple">@drawable/btn_checkbox_holo_light</item>
-
+		<item name="android:scrollbarThumbHorizontal">@drawable/scrollbar_handle_holo_light</item>
+		<item name="android:scrollbarThumbVertical">@drawable/scrollbar_handle_holo_light</item>
 		<!-- Widget styles -->
 		<item name="android:autoCompleteTextViewStyle">@style/Widget.Holo.Light.AutoCompleteTextView</item>
 		<item name="android:checkboxStyle">@style/Widget.Holo.Light.CompoundButton.CheckBox</item>

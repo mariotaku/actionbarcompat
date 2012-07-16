@@ -92,7 +92,7 @@ public class MenuBar extends TableRow implements PopupMenu.OnMenuItemClickListen
 		actionButton.setImageDrawable(item.getIcon());
 		actionButton.setScaleType(ScaleType.CENTER);
 		actionButton.setContentDescription(item.getTitle());
-		actionButton.setAlpha(item.isEnabled() ? 0xFF : 0x80);
+		actionButton.setEnabled(item.isEnabled());
 		actionButton.setOnClickListener(new View.OnClickListener() {
 
 			@Override

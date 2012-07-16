@@ -92,6 +92,7 @@ class ActionBarCompatBase extends ActionBarCompat implements ActionBar {
 		return mTitleView.getText();
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void setBackgroundDrawable(Drawable d) {
 		if (mActionBarView != null) {
@@ -500,7 +501,7 @@ class ActionBarCompatBase extends ActionBarCompat implements ActionBar {
 
 		@Override
 		public MenuItem setVisible(boolean visible) {
-			if (mActionBarMenu == null || mRealMenu == null) return this;
+			if (mActionBarMenu == null || mRealMenu == null || mActionMenuView == null) return this;
 			final MenuItem item = mActionBarMenu.findItem(itemId);
 			final MenuItem realItem = mRealMenu.findItem(itemId);
 			if (item != null) {

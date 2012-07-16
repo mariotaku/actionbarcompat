@@ -4,10 +4,9 @@
 	android:layout_height="wrap_content">
 
 	<ListView
-		android:maxHeight="240dp"
 		android:id="@android:id/list"
-		android:layout_width="200dp"
-		android:layout_height="fill_parent"/>
+		android:layout_width="160dp"
+		android:layout_height="fill_parent"
+		android:maxHeight="240dp"/>
 
 </FrameLayout>
-

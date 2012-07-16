@@ -244,9 +244,9 @@ public class PopupMenuCompat extends PopupMenu implements OnDismissListener, OnI
 
 		}
 
-		final int dyTop = visibleRect.top, dyBottom = screenHeight - visibleRect.bottom;
+		final int dyBottom = screenHeight - visibleRect.bottom;
 
-		final boolean dropDown = rootHeight < dyBottom;// && dyBottom != 0;
+		final boolean dropDown = rootHeight < dyBottom;
 
 		if (dropDown) {
 			vertical_gravity = Gravity.TOP;
